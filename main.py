@@ -3,17 +3,19 @@ from discord.ext import commands, fancyhelp
 
 import os, asyncio
 
+from src.helpers.command_preprocessing import preprocess_command
+from src.helpers.global_vars import DEFAULT_PREFIX
+
 # imports for type hinting
 from src.cogs.misc import Miscellaneous 
 import discord.ext.commands
-
-DEFAULT_PREFIX = ">>"
 
 intents = discord.Intents.default()
 intents.message_content = True
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(DEFAULT_PREFIX), intents=intents, help_command=fancyhelp.EmbeddedHelpCommand())
 
+#region event handlers
 # On ready event
 @bot.event
 async def on_ready():
@@ -34,8 +36,28 @@ async def on_command(ctx):
 async def on_command_error(ctx: discord.ext.commands.context.Context, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"\u26A0\uFE0F Missing argument: `{error.param.name}`. Please check the command usage using `>>help {ctx.command}`.")
+    elif isinstance(error, commands.BadArgument):
+        if error.args[-1].startswith(""): # failed enum conversion
+            await ctx.send(f"\u26A0\uFE0F Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
+        else:
+            raise error
     else:
         raise error
+
+# on message event
+@bot.event
+async def on_message(message: discord.message.Message):
+    if message.author.bot:
+        return
+    if not message.content.startswith(DEFAULT_PREFIX):
+        return
+    
+    message.content = preprocess_command(message.content) # preprocess commands, i.e. ensure all letters are lowercase, properly insert underscores in some args, etc.
+
+    await bot.process_commands(message)
+
+#endregion
+
 
 # Load cogs
 async def load():

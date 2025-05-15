@@ -1,1 +1,2 @@
+discord-ext-fancy-help @ git+https://github.com/redParrot17/discord-ext-fancy-help@07bd395b9570d621c851a8adc38ee05db24602b5
 discord.py==2.5.2

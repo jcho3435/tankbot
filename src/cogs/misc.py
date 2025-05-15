@@ -3,6 +3,7 @@ from discord.ext import commands
 import datetime
 
 from src.helpers.format_uptime import format_uptime
+from src.helpers.global_vars import DEFAULT_PREFIX
 
 import discord.ext.commands # imported for type hinting
 
@@ -27,7 +28,7 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
                 self.interaction = interaction
                 self.bot = interaction.client
                 self.channel = interaction.channel
-                self.clean_prefix = ">>"
+                self.clean_prefix = DEFAULT_PREFIX
 
         help_command.context = FakeContext(interaction)
 
