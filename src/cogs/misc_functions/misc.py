@@ -5,8 +5,8 @@ import discord
 import datetime
 
 from src.helpers.format_uptime import format_uptime
-from src.helpers.global_vars import DEFAULT_PREFIX
 from src.helpers.command_aliases import COMMAND_COUNT_ALIASES
+from src.cogs.misc_functions.help_command import help_command
 
 class Miscellaneous(commands.Cog, name="Miscellaneous"):
     """Random miscellaneous commands."""
@@ -19,28 +19,10 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     # Ugly work around for help slash command
     @app_commands.command(name="help", description="Get command information.")
     async def slash_help(self, interaction: discord.Interaction, command: str = None):
-        await interaction.response.send_message("Your help embed is being prepared. If no embed is generated, please use the prefix command `>>help` instead.") 
+        """Shows a list of commands, or shows information about a specified command."""
+        await interaction.response.send_message("Your help embed is being prepared. If no embed is generated, please use the prefix command `>>help` instead.")
+        await help_command(self, interaction, command)
 
-        help_command = self.bot.help_command
-
-        class FakeContext: # fake context object to trick fancyhelp into working
-            def __init__(self, interaction: discord.Interaction):
-                self.interaction = interaction
-                self.bot = interaction.client
-                self.channel = interaction.channel
-                self.clean_prefix = DEFAULT_PREFIX
-
-        help_command.context = FakeContext(interaction)
-
-        if command:
-            cmd = self.bot.get_command(command)
-            if cmd is None: 
-                await help_command.command_not_found(command)
-                return
-            await help_command.send_command_help(cmd)
-        else:
-            mapping = help_command.get_bot_mapping()
-            await help_command.send_bot_help(mapping)
     
     # command count
     @commands.hybrid_command(aliases=COMMAND_COUNT_ALIASES)
