@@ -8,7 +8,7 @@ from src.helpers.global_vars import DEFAULT_PREFIX
 from src.helpers.command_aliases import WEAPON_INFO_ALIASES
 
 def process_weapon_info_command_args(args: str) -> str:
-    args = args.split()
+    args = args.replace("-", " ").split()
     return "_".join(args).lower()
 
 def preprocess_command(msg: str) -> str:

@@ -66,6 +66,5 @@ async def load():
     for file in cogFiles:
         await bot.load_extension(f"src.cogs.{file}_functions.{file}")
 
-
 asyncio.run(load())
 bot.run(os.getenv("BOT_TOKEN"))

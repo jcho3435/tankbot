@@ -4,7 +4,8 @@ import discord
 
 from src.helpers.weapons import weapons
 from src.helpers.command_aliases import WEAPON_INFO_ALIASES
-        
+from src.cogs.wiki_functions.weapon_info_command import weapon_info_command
+
 class WikiLookup(commands.Cog, name="Wiki Lookup"):
     """Commands for quick wiki lookups."""
 
@@ -12,13 +13,11 @@ class WikiLookup(commands.Cog, name="Wiki Lookup"):
         self.bot = bot
 
     #region Commands
-    # Test command
+    # weapon info command
     @commands.hybrid_command(name="weapon_info", aliases=WEAPON_INFO_ALIASES)
     @app_commands.describe(weapon="Choose a weapon to get info on.")
     async def weapon_info(self, ctx: commands.Context, weapon: str):
-        if weapon not in weapons:
-            raise commands.BadArgument("Invalid option")
-        await ctx.send(f"You chose: {weapon}")
+        await weapon_info_command(ctx, weapon)
 
     #endregion
 

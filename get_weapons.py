@@ -26,12 +26,21 @@ weapons: List[str] = [wep.text for wep in wepList]
 with open("./src/helpers/weapons.py", "w+") as f:
     f.write("weapons = [\n") # create enum class
 
+    hyphenatedWeps = []
     for wep in weapons: 
-        f.write(
-            f'\t"{wep.lower().replace(" ", "_").replace("-", "_")}",\n'
-        ) # replaces all spaces and hyphens with underscores
+        processedWep = wep.lower().replace(" ", "_").replace("-", "_") # replaces all spaces and hyphens with underscores
+        f.write(f'\t"{processedWep}",\n') 
+        if "-" in wep:
+            hyphenatedWeps.append(processedWep)
 
-    f.write("]")
+    f.write("]\n\n")
+    f.write("hyphenatedWeps = [\n")
+
+    for wep in hyphenatedWeps:
+        f.write(f'\t"{wep}",\n')
+
+    f.write("]\n")
+
 
 
 # Store the webpage into weapons.html

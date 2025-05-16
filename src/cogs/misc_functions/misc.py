@@ -16,7 +16,7 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
         self.commandCount = 0
         self.startTime = datetime.datetime.now()
 
-    # Ugly work around for help slash command
+    # Ugly workaround for help slash command
     @app_commands.command(name="help", description="Get command information.")
     async def slash_help(self, interaction: discord.Interaction, command: str = None):
         """Shows a list of commands, or shows information about a specified command."""
