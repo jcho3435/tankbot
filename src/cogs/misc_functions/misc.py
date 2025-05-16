@@ -1,12 +1,12 @@
 from discord import app_commands
 from discord.ext import commands
+import discord
+
 import datetime
 
 from src.helpers.format_uptime import format_uptime
 from src.helpers.global_vars import DEFAULT_PREFIX
-
-import discord.ext.commands # imported for type hinting
-
+from src.helpers.command_aliases import COMMAND_COUNT_ALIASES
 
 class Miscellaneous(commands.Cog, name="Miscellaneous"):
     """Random miscellaneous commands."""
@@ -34,20 +34,23 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
 
         if command:
             cmd = self.bot.get_command(command)
+            if cmd is None: 
+                await help_command.command_not_found(command)
+                return
             await help_command.send_command_help(cmd)
         else:
             mapping = help_command.get_bot_mapping()
             await help_command.send_bot_help(mapping)
     
     # command count
-    @commands.hybrid_command(aliases=["command-count", "commandcount"])
-    async def command_count(self, ctx: discord.ext.commands.context.Context):
+    @commands.hybrid_command(aliases=COMMAND_COUNT_ALIASES)
+    async def command_count(self, ctx: commands.Context):
         """Responds with the number of commands that have been run since the last time the bot went offline."""
         await ctx.send(f"**{self.commandCount}** command(s) have been sent since the bot last went went offline.")
 
     # uptime
     @commands.hybrid_command()
-    async def uptime(self, ctx: discord.ext.commands.context.Context):
+    async def uptime(self, ctx: commands.Context):
         """Responds with the amount of time elapsed since the bot has last come online."""
         time = datetime.datetime.now() - self.startTime
         await ctx.send(f"The bot has been online for **{format_uptime(time)}**!")

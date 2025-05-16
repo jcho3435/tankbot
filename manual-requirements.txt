@@ -1,4 +1,7 @@
 discord.py==2.5.2
+lxml==5.3.0
+lxml==5.4.0
+Requests==2.32.3
 
 # DO NOT REMOVE THIS
 discord-ext-fancy-help @ git+https://github.com/redParrot17/discord-ext-fancy-help@07bd395b9570d621c851a8adc38ee05db24602b5

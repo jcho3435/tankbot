@@ -7,7 +7,7 @@ from src.helpers.command_preprocessing import preprocess_command
 from src.helpers.global_vars import DEFAULT_PREFIX
 
 # imports for type hinting
-from src.cogs.misc import Miscellaneous 
+from src.cogs.misc_functions.misc import Miscellaneous 
 import discord.ext.commands
 
 intents = discord.Intents.default()
@@ -27,20 +27,17 @@ async def on_ready():
 # On command event
 @bot.event
 async def on_command(ctx):
-    cog: Miscellaneous = bot.get_cog("Miscellaneous")
+    cog: Miscellaneous = bot.get_cog("Miscellaneous") 
     if cog:
-        cog.commandCount += 1
+        cog.commandCount += 1 # Maybe replace this with a setter function, an incrementer function, or something else, then have this as a static field
 
 # On error event
 @bot.event
 async def on_command_error(ctx: discord.ext.commands.context.Context, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"\u26A0\uFE0F Missing argument: `{error.param.name}`. Please check the command usage using `>>help {ctx.command}`.")
-    elif isinstance(error, commands.BadArgument):
-        if error.args[-1].startswith(""): # failed enum conversion
+    elif isinstance(error, commands.BadArgument) and error.args[-1].startswith("Invalid option"):
             await ctx.send(f"\u26A0\uFE0F Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
-        else:
-            raise error
     else:
         raise error
 
@@ -67,7 +64,7 @@ async def load():
     ]
 
     for file in cogFiles:
-        await bot.load_extension(f"src.cogs.{file}")
+        await bot.load_extension(f"src.cogs.{file}_functions.{file}")
 
 
 asyncio.run(load())
