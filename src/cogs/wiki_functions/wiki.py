@@ -2,8 +2,8 @@ from discord.ext import commands
 from discord import app_commands
 import discord
 
-from src.helpers.weapons import weapons
 from src.helpers.command_aliases import WEAPON_INFO_ALIASES
+from src.helpers.weapons import weapons
 from src.cogs.wiki_functions.weapon_info_command import weapon_info_command
 
 class WikiLookup(commands.Cog, name="Wiki Lookup"):

@@ -36,8 +36,10 @@ async def on_command(ctx):
 async def on_command_error(ctx: discord.ext.commands.context.Context, error):
     if isinstance(error, commands.MissingRequiredArgument):
         await ctx.send(f"\u26A0\uFE0F Missing argument: `{error.param.name}`. Please check the command usage using `>>help {ctx.command}`.")
-    elif isinstance(error, commands.BadArgument) and error.args[-1].startswith("Invalid option"):
-            await ctx.send(f"\u26A0\uFE0F Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
+    elif isinstance(error, commands.BadArgument) and error.args[-1].startswith("Invalid argument"):
+        await ctx.send(f"\u26A0\uFE0F Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
+    elif isinstance(error, commands.CommandNotFound):
+        await ctx.send(f"\u26A0\uFE0F Command not recognized: Use `/help` or `{DEFAULT_PREFIX}help` to see a list of commands.")
     else:
         raise error
 
