@@ -6364,8 +6364,8 @@
       "Damage": "80",
       "Explosion Radius": "?",
       "Terrain Damage": "Secondary effect only",
-      "Self Damage": "yes"
+      "Self Damage": "Yes"
     },
-    "updated": "2025-05-18T01:03:01.331452"
+    "updated": "2025-05-18T02:39:09.880062"
   }
 }

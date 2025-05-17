@@ -12,12 +12,10 @@ import requests
 from tqdm import tqdm
 import json
 
-from src.helpers.global_vars import WIKI_BASE_URL
+from src.helpers.global_vars import WIKI_BASE_URL, WEAPONS_JSON_FILE
 from src.helpers.extract_wiki_weapon_info import get_weapon_info
 
 from typing import List
-
-WEAPONS_JSON_FILE = "data/weapons.json"
 
 res = requests.get(f"{WIKI_BASE_URL}/weapons")
 tree: html.HtmlElement = html.fromstring(res.content)
@@ -28,7 +26,10 @@ wepList: List[html.HtmlElement] = wepTable.xpath(".//span[@style='color:white;']
 weapons: List[str] = [wep.text for wep in wepList]
 
 # Weapons should be stored as 
-# {"weapon_name": {"wepId": "Weapon-Name", "desc": "weapon description", "imageUrl": "wepImageUrl", "color": "#HEXCOL", "stats": {...}}, "updated": "ISO format datetime string"}
+# {"weapon_name": 
+#   {"wepId": "Weapon-Name", "desc": "weapon description", "imageUrl": "wepImageUrl",
+#   "color": "#HEXCOL", "stats": {...}, "tips": {"sectionId": "ID", "content": [...]},
+#   "updated": "ISO format datetime string"}
 
 dataDict = {}
 wepCount = len(weapons)

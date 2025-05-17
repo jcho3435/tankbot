@@ -1,2 +1,3 @@
 COMMAND_COUNT_ALIASES = ["command-count", "commandcount"]
-WEAPON_INFO_ALIASES = ["wi", "wepinfo", "wep_info", "weaponinfo"]
+WEAPON_INFO_ALIASES = ["wi", "weaponinfo", "wepinfo", "wep_info"]
+WEAPON_TIPS_ALIASES = ["wt", "weapontips", "weptips", "wep_tips", "tipsandtrivia", "tips_and_trivia"]

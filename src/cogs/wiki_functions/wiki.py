@@ -2,9 +2,10 @@ from discord.ext import commands
 from discord import app_commands
 import discord
 
-from src.helpers.command_aliases import WEAPON_INFO_ALIASES
+from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES
 from src.helpers.weapons import weapons
 from src.cogs.wiki_functions.weapon_info_command import weapon_info_command
+from src.cogs.wiki_functions.weapon_tips_command import weapon_tips_command
 
 class WikiLookup(commands.Cog, name="Wiki Lookup"):
     """Commands for quick wiki lookups."""
@@ -19,11 +20,17 @@ class WikiLookup(commands.Cog, name="Wiki Lookup"):
     async def weapon_info(self, ctx: commands.Context, weapon: str):
         await weapon_info_command(ctx, weapon)
 
+    @commands.hybrid_command(name="weapon_tips", aliases=WEAPON_TIPS_ALIASES)
+    @app_commands.describe(weapon="Choose a weapon to get tips and trivia on.")
+    async def weapon_tips(self, ctx: commands.Context, weapon: str):
+        await weapon_tips_command(ctx, weapon)
+
     #endregion
 
 
     #region Autocompletes
     @weapon_info.autocomplete("weapon")
+    @weapon_tips.autocomplete("weapon")
     async def weapon_autocomplete(self, interaction: discord.Interaction, current: str):
         maxLen, currLen = 10, 0
         choices = []
