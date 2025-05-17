@@ -4,7 +4,7 @@ json format in data/weapons.json. This script should only need to be run every o
 when the wiki has potentially had updates, or when new weapons are added to the wiki. Also, if the 
 structure of the wiki page is ever updated, then this script might also need to be updated.
 
-NOTE: Spaces in weapon names must be replaced with underscores for the sake of the wiki
+NOTE: Spaces in weapon names must be replaced with underscores for the sake of the wiki.
 """
 
 from lxml import html
@@ -56,7 +56,12 @@ for i in tqdm(range(wepCount)):
 with open(WEAPONS_JSON_FILE, "w+") as f:
     json.dump(dataDict, f, indent=2)
 
-print(f"Successfully wrote {wepCount} weapon's data to {WEAPONS_JSON_FILE}")
+print(f"Successfully wrote {wepCount} weapons' data to {WEAPONS_JSON_FILE}")
+
+
+
+
+
 
 # Store the webpage into weapons.html
 # with open("weapons.html", "w", encoding="utf-8") as f:
