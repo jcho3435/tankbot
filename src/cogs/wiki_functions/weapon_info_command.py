@@ -4,7 +4,7 @@ from discord.ext import commands
 import datetime
 
 from src.helpers.global_vars import WIKI_BASE_URL
-from src.helpers.weapons import weapons, weaponData
+from src.helpers.global_vars import weapons, weaponData
 from src.helpers.extract_wiki_weapon_info import update_weapon_info
 
 def construct_wep_info_embed(weapon: str) -> discord.Embed:
@@ -33,6 +33,8 @@ def construct_wep_info_embed(weapon: str) -> discord.Embed:
     neededFields = 3 - (len(stats.keys()) % 3)
     for i in range(neededFields):
         embed.add_field(name="", value="")
+
+    embed.set_footer(text="Incorrect or missing information? Help improve the ShellShock Live Wiki!\n")
 
     return embed
 

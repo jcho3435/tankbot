@@ -3012,11 +3012,11 @@
       "Weapon Type": "Direct Impact",
       "Damage per Projectile": "10 on impact\n6 per projectile",
       "Projectiles": "40",
-      "Explosion Radius": "40*5 (40*12.5 PU)",
+      "Explosion Radius": "40\\*5 (40\\*12.5 PU)",
       "Terrain Damage": "Yes",
       "Self Damage": "Yes"
     },
-    "updated": "2025-05-18T01:01:34.227904"
+    "updated": "2025-05-18T04:10:28.021196"
   },
   "penetrator": {
     "wepId": "Penetrator",
@@ -6216,36 +6216,39 @@
   },
   "wanderer": {
     "wepId": "Wanderer",
-    "desc": "",
+    "desc": "Fires a projectile that, upon landing, wanders around near to the landing location. After a few seconds, it creates a small explosion.",
     "color": "#FFFFFF",
     "imgUrl": "https://static.wikia.nocookie.net/shellshocklive_gamepedia_en/images/d/d3/W_Wanderer_Icon.png/revision/latest?cb=20230331195034",
     "stats": {
       "Damage": "100",
+      "Terrain Damage": "Yes",
       "Self Damage": "Yes"
     },
-    "updated": "2025-05-18T01:02:57.552190"
+    "updated": "2025-05-18T04:27:09.615062"
   },
   "double_wanderer": {
     "wepId": "Double_Wanderer",
-    "desc": "",
+    "desc": "Just like its first tier, except it instead spawns two wanderer projectiles after landing!",
     "color": "#FFFFFF",
     "imgUrl": "https://static.wikia.nocookie.net/shellshocklive_gamepedia_en/images/8/84/W_DoubleWanderer_Icon.png/revision/latest?cb=20230331195049",
     "stats": {
       "Damage": "2 x 55",
+      "Terrain Damage": "Yes",
       "Self Damage": "Yes"
     },
-    "updated": "2025-05-18T01:02:57.825861"
+    "updated": "2025-05-18T04:29:22.191420"
   },
   "triple_wanderer": {
     "wepId": "Triple_Wanderer",
-    "desc": "",
+    "desc": "Just like the prior two tiers, except it spawns three projectiles!",
     "color": "#FFFFFF",
     "imgUrl": "https://static.wikia.nocookie.net/shellshocklive_gamepedia_en/images/a/ae/W_TripleWanderer_Icon.png/revision/latest?cb=20230331195110",
     "stats": {
       "Damage": "3 x 40",
+      "Terrain Damage": "Yes",
       "Self Damage": "Yes"
     },
-    "updated": "2025-05-18T01:02:58.100133"
+    "updated": "2025-05-18T04:29:32.516418"
   },
   "censorbar": {
     "wepId": "CensorBar",
@@ -6364,8 +6367,8 @@
       "Damage": "80",
       "Explosion Radius": "?",
       "Terrain Damage": "Secondary effect only",
-      "Self Damage": "yes"
+      "Self Damage": "Yes"
     },
-    "updated": "2025-05-18T01:03:01.331452"
+    "updated": "2025-05-18T02:39:09.880062"
   }
 }

@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from src.helpers.weapons import weapons, weaponData
+from src.helpers.global_vars import weapons, weaponData
 from src.helpers.extract_wiki_weapon_info import update_weapon_info
 from src.helpers.global_vars import WIKI_BASE_URL
 
@@ -21,19 +21,21 @@ def construct_weapon_tips_embed(weapon: str) -> discord.Embed:
     imageUrl = wepData["imgUrl"]
 
     embed = discord.Embed(title=f"{wepId.replace("_", " ")} Tips and Trivia", timestamp=datetime.datetime.now(), color=color)
+    embed.set_thumbnail(url=imageUrl)
 
     # return early if there is not tips/trivia section
     if not wepData["tips"]["sectionId"]:
-        embed.add_field("Oops! Looks like the wiki doesn't have any Tips & Tricks section for this weapon!")
+        embed.add_field(name="No data", value="Oops! Looks like the wiki doesn't have any Tips & Tricks section for this weapon!")
         embed.url = f"{WIKI_BASE_URL}/{wepId}"
         return embed
 
     embed.url = f"{WIKI_BASE_URL}/{wepId}#{wepData["tips"]["sectionId"]}"
-    embed.set_thumbnail(url=imageUrl)
 
     tips: List[str] = wepData["tips"]["content"]
     for tip in tips:
         embed.add_field(name = "", value=f"\u2022 {tip}", inline=False)
+
+    embed.set_footer(text="Incorrect or missing information? Help improve the ShellShock Live Wiki!\n")
 
     return embed
 

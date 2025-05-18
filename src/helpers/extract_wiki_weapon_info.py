@@ -7,12 +7,20 @@ import datetime
 from lxml import html
 
 from src.helpers.global_vars import WIKI_BASE_URL, WEAPONS_JSON_FILE
-from src.helpers.weapons import weaponData
+from src.helpers.global_vars import weaponData
 
 #imports for typing
 from typing import List
 
 IGNORED_STATS_FIELDS = ["Requirements"]
+TIPS_AND_TRIVIA_IDS = ["Tips_&_Trivia", "Tips", "Trivia", "Tips_And_Trivia"]
+
+def escape_special_chars(s: str) -> str:
+    chars = "_*~"
+    for c in chars:
+        s = s.replace(c, f"\\{c}")
+
+    return s
 
 def update_weapon_info(weapon: str) -> None:
     """
@@ -54,7 +62,7 @@ def get_weapon_info(wepId: str) -> dict:
     wepHeader: html.HtmlElement = tree.xpath(f"//span[@id='{wepId}']")[0].getparent()
     wepInfoTable: html.HtmlElement = wepHeader.getnext()
 
-    wepDesc = wepInfoTable.xpath("string(.//td[@class='weapondesc'])").strip() # WEAPON DESCRIPTION
+    wepDesc = escape_special_chars(wepInfoTable.xpath("string(.//td[@class='weapondesc'])").strip()) # WEAPON DESCRIPTION
 
     wepBoxElement: html.HtmlElement = wepInfoTable.xpath(".//div[@class='weapon-box']")[0]
 
@@ -78,12 +86,39 @@ def get_weapon_info(wepId: str) -> dict:
         label = tds[0].xpath("string(.)").strip()
         if label in IGNORED_STATS_FIELDS:
             continue
-        stats[label] = tds[1].xpath("string(.)").strip()
+        stats[label] = escape_special_chars(tds[1].xpath("string(.)").strip())
+
+    # extract tips and trivia
+    tipsDict = {"sectionId": None, "content": []}
+
+    tipsHeader: html.HtmlElement = None
+    tipsList: List[html.HtmlElement] = []
+    for headerId in TIPS_AND_TRIVIA_IDS:
+        tipsSpan = tree.xpath(f"//span[@id='{headerId}']")
+        if tipsSpan:
+            tipsHeader = tipsSpan[0].getparent()
+            tipsDict["sectionId"] = headerId
+            tipsList = tipsHeader.getnext()
+            break
+    
+    for tip in tipsList:  # this is done to avoid excessive nesting of statements
+        figure: html.HtmlElement = tip.find('figure')
+        text = ""
+
+        if figure is not None:
+            if figure.tail:
+                text = figure.tail.strip()
+            tip.remove(figure)
+        else:
+            text = tip.xpath("string(.)").strip()
+
+        tipsDict["content"].append(text)
 
     return {
         "desc": wepDesc, 
         "color": bgColorHex, 
         "imgUrl": imgUrl, 
         "stats": stats,
+        "tips": tipsDict,
         "updated": datetime.datetime.now().isoformat()
     }

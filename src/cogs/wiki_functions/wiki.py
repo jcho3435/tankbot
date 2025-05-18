@@ -3,11 +3,11 @@ from discord import app_commands
 import discord
 
 from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES
-from src.helpers.weapons import weapons
+from src.helpers.global_vars import weapons
 from src.cogs.wiki_functions.weapon_info_command import weapon_info_command
 from src.cogs.wiki_functions.weapon_tips_command import weapon_tips_command
 
-class WikiLookup(commands.Cog, name="Wiki Lookup"):
+class QuickWiki(commands.Cog, name="Quick Wiki"):
     """Commands for quick wiki lookups."""
 
     def __init__(self, bot):
@@ -18,11 +18,13 @@ class WikiLookup(commands.Cog, name="Wiki Lookup"):
     @commands.hybrid_command(name="weapon_info", aliases=WEAPON_INFO_ALIASES)
     @app_commands.describe(weapon="Choose a weapon to get info on.")
     async def weapon_info(self, ctx: commands.Context, weapon: str):
+        """Fetches and displays weapon information from the ShellShock Live wiki."""
         await weapon_info_command(ctx, weapon)
 
     @commands.hybrid_command(name="weapon_tips", aliases=WEAPON_TIPS_ALIASES)
     @app_commands.describe(weapon="Choose a weapon to get tips and trivia on.")
     async def weapon_tips(self, ctx: commands.Context, weapon: str):
+        """Fetches and displays weapon tips and trivia from the ShellShock Live wiki. Cannot display videos from the wiki."""
         await weapon_tips_command(ctx, weapon)
 
     #endregion
@@ -47,5 +49,5 @@ class WikiLookup(commands.Cog, name="Wiki Lookup"):
     #endregion
 
 async def setup(bot: commands.Bot):
-    await bot.add_cog(WikiLookup(bot))
+    await bot.add_cog(QuickWiki(bot))
     
