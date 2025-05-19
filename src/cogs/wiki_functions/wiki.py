@@ -2,7 +2,7 @@ from discord.ext import commands
 from discord import app_commands
 import discord
 
-from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES
+from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES, XP_ALIASES
 from src.helpers.global_vars import weapons
 from src.cogs.wiki_functions.weapon_info_command import weapon_info_command
 from src.cogs.wiki_functions.weapon_tips_command import weapon_tips_command
@@ -27,6 +27,11 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
         """Fetches and displays weapon tips and trivia from the ShellShock Live wiki. Cannot display videos from the wiki."""
         await weapon_tips_command(ctx, weapon)
 
+    @commands.hybrid_command(name="xp", aliases=XP_ALIASES)
+    @app_commands.describe(level="Choose a level or star amount to get xp requirements on.")
+    async def xp(self, ctx: commands.Context, xp: str):
+        """Fetches and displays xp information from the ShellShock Live wiki."""
+        pass
     #endregion
 
 
