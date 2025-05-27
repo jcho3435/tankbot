@@ -36,9 +36,9 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
     # xp command
     @commands.hybrid_command(name="xp", aliases=XP_ALIASES)
     @app_commands.describe(level="Choose a level or star amount to get xp requirements on.")
-    async def xp(self, ctx: commands.Context, level: str):
+    async def xp(self, ctx: commands.Context, level: str = None):
         """Fetches and displays xp information from the ShellShock Live wiki."""
-        pass
+        await ctx.send("Command called: level = " + level if level else "")
 
     #endregion
 

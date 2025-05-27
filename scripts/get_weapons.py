@@ -1,11 +1,20 @@
-"""
+r"""
 This is a script that will pull all weapons from the ShellShock Live wiki page, and stores them in 
 json format in data/weapons.json. This script should only need to be run every once in a while, 
 when the wiki has potentially had updates, or when new weapons are added to the wiki. Also, if the 
 structure of the wiki page is ever updated, then this script might also need to be updated.
 
 NOTE: Spaces in weapon names must be replaced with underscores for the sake of the wiki.
+NOTE: This script should be run from the root of the project, e.g. C://path/to/project/Tank\ Game
 """
+
+# this will be needed for all scripts
+import os
+import sys
+curr_dir = os.path.dirname(os.path.abspath(__file__))
+root = os.path.abspath(os.path.join(curr_dir, '..'))
+sys.path.insert(0, root)
+
 
 from lxml import html
 import requests
