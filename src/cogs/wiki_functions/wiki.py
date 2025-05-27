@@ -21,17 +21,25 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
         """Fetches and displays weapon information from the ShellShock Live wiki."""
         await weapon_info_command(ctx, weapon)
 
-    @commands.hybrid_command(name="weapon_tips", aliases=WEAPON_TIPS_ALIASES)
+
+    # weapon tips command
+    @commands.hybrid_command(
+        name="weapon_tips", aliases=WEAPON_TIPS_ALIASES, 
+        help="Fetches and displays weapon tips and trivia from the ShellShock Live wiki. Cannot display videos from the wiki.",
+        description="Fetches and displays weapon tips and trivia from the ShellShock Live wiki."
+    )
     @app_commands.describe(weapon="Choose a weapon to get tips and trivia on.")
     async def weapon_tips(self, ctx: commands.Context, weapon: str):
-        """Fetches and displays weapon tips and trivia from the ShellShock Live wiki. Cannot display videos from the wiki."""
         await weapon_tips_command(ctx, weapon)
 
+
+    # xp command
     @commands.hybrid_command(name="xp", aliases=XP_ALIASES)
     @app_commands.describe(level="Choose a level or star amount to get xp requirements on.")
-    async def xp(self, ctx: commands.Context, xp: str):
+    async def xp(self, ctx: commands.Context, level: str):
         """Fetches and displays xp information from the ShellShock Live wiki."""
         pass
+
     #endregion
 
 
