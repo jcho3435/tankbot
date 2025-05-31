@@ -6,6 +6,7 @@ from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES
 from src.helpers.global_vars import weapons
 from src.cogs.wiki_functions.weapon_info_command import weapon_info_command
 from src.cogs.wiki_functions.weapon_tips_command import weapon_tips_command
+from src.cogs.wiki_functions.xp_table_command import xp_table_command
 
 class QuickWiki(commands.Cog, name="Quick Wiki"):
     """Commands for quick wiki lookups."""
@@ -38,7 +39,7 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
     @app_commands.describe(level="Choose a level or star amount to get xp requirements on.")
     async def xp(self, ctx: commands.Context, level: str = None):
         """Fetches and displays xp information from the ShellShock Live wiki."""
-        await ctx.send("Command called: level = " + level if level else "")
+        await xp_table_command(ctx, level)
 
     #endregion
 
@@ -54,7 +55,7 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
             if current in w:
                 choices.append(app_commands.Choice(name=w, value=w))
                 currLen += 1
-                if currLen > maxLen:
+                if currLen >= maxLen:
                     return choices
                 
         return choices

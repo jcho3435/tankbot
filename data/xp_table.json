@@ -1,422 +1,422 @@
 {
   "1": {
-    "cumulative": 0,
-    "next_level": 50
+    "cumulative": "0",
+    "next_level": "50"
   },
   "2": {
-    "cumulative": 50,
-    "next_level": 50
+    "cumulative": "50",
+    "next_level": "50"
   },
   "3": {
-    "cumulative": 100,
-    "next_level": 100
+    "cumulative": "100",
+    "next_level": "100"
   },
   "4": {
-    "cumulative": 200,
-    "next_level": 100
+    "cumulative": "200",
+    "next_level": "100"
   },
   "5": {
-    "cumulative": 300,
-    "next_level": 100
+    "cumulative": "300",
+    "next_level": "100"
   },
   "6": {
-    "cumulative": 400,
-    "next_level": 100
+    "cumulative": "400",
+    "next_level": "100"
   },
   "7": {
-    "cumulative": 500,
-    "next_level": 150
+    "cumulative": "500",
+    "next_level": "150"
   },
   "8": {
-    "cumulative": 650,
-    "next_level": 150
+    "cumulative": "650",
+    "next_level": "150"
   },
   "9": {
-    "cumulative": 800,
-    "next_level": 150
+    "cumulative": "800",
+    "next_level": "150"
   },
   "10": {
-    "cumulative": 950,
-    "next_level": 150
+    "cumulative": "950",
+    "next_level": "150"
   },
   "11": {
-    "cumulative": 1100,
-    "next_level": 200
+    "cumulative": "1,100",
+    "next_level": "200"
   },
   "12": {
-    "cumulative": 1300,
-    "next_level": 200
+    "cumulative": "1,300",
+    "next_level": "200"
   },
   "13": {
-    "cumulative": 1500,
-    "next_level": 200
+    "cumulative": "1,500",
+    "next_level": "200"
   },
   "14": {
-    "cumulative": 1700,
-    "next_level": 200
+    "cumulative": "1,700",
+    "next_level": "200"
   },
   "15": {
-    "cumulative": 1900,
-    "next_level": 250
+    "cumulative": "1,900",
+    "next_level": "250"
   },
   "16": {
-    "cumulative": 2150,
-    "next_level": 250
+    "cumulative": "2,150",
+    "next_level": "250"
   },
   "17": {
-    "cumulative": 2400,
-    "next_level": 250
+    "cumulative": "2,400",
+    "next_level": "250"
   },
   "18": {
-    "cumulative": 2650,
-    "next_level": 250
+    "cumulative": "2,650",
+    "next_level": "250"
   },
   "19": {
-    "cumulative": 2900,
-    "next_level": 300
+    "cumulative": "2,900",
+    "next_level": "300"
   },
   "20": {
-    "cumulative": 3200,
-    "next_level": 300
+    "cumulative": "3,200",
+    "next_level": "300"
   },
   "21": {
-    "cumulative": 3500,
-    "next_level": 300
+    "cumulative": "3,500",
+    "next_level": "300"
   },
   "22": {
-    "cumulative": 3800,
-    "next_level": 300
+    "cumulative": "3,800",
+    "next_level": "300"
   },
   "23": {
-    "cumulative": 4100,
-    "next_level": 350
+    "cumulative": "4,100",
+    "next_level": "350"
   },
   "24": {
-    "cumulative": 4450,
-    "next_level": 350
+    "cumulative": "4,450",
+    "next_level": "350"
   },
   "25": {
-    "cumulative": 4800,
-    "next_level": 350
+    "cumulative": "4,800",
+    "next_level": "350"
   },
   "26": {
-    "cumulative": 5150,
-    "next_level": 350
+    "cumulative": "5,150",
+    "next_level": "350"
   },
   "27": {
-    "cumulative": 5500,
-    "next_level": 400
+    "cumulative": "5,500",
+    "next_level": "400"
   },
   "28": {
-    "cumulative": 5900,
-    "next_level": 400
+    "cumulative": "5,900",
+    "next_level": "400"
   },
   "29": {
-    "cumulative": 6300,
-    "next_level": 400
+    "cumulative": "6,300",
+    "next_level": "400"
   },
   "30": {
-    "cumulative": 6700,
-    "next_level": 400
+    "cumulative": "6,700",
+    "next_level": "400"
   },
   "31": {
-    "cumulative": 7100,
-    "next_level": 450
+    "cumulative": "7,100",
+    "next_level": "450"
   },
   "32": {
-    "cumulative": 7550,
-    "next_level": 450
+    "cumulative": "7,550",
+    "next_level": "450"
   },
   "33": {
-    "cumulative": 8000,
-    "next_level": 450
+    "cumulative": "8,000",
+    "next_level": "450"
   },
   "34": {
-    "cumulative": 8450,
-    "next_level": 450
+    "cumulative": "8,450",
+    "next_level": "450"
   },
   "35": {
-    "cumulative": 8900,
-    "next_level": 500
+    "cumulative": "8,900",
+    "next_level": "500"
   },
   "36": {
-    "cumulative": 9400,
-    "next_level": 500
+    "cumulative": "9,400",
+    "next_level": "500"
   },
   "37": {
-    "cumulative": 9900,
-    "next_level": 500
+    "cumulative": "9,900",
+    "next_level": "500"
   },
   "38": {
-    "cumulative": 10400,
-    "next_level": 500
+    "cumulative": "10,400",
+    "next_level": "500"
   },
   "39": {
-    "cumulative": 10900,
-    "next_level": 550
+    "cumulative": "10,900",
+    "next_level": "550"
   },
   "40": {
-    "cumulative": 11450,
-    "next_level": 550
+    "cumulative": "11,450",
+    "next_level": "550"
   },
   "41": {
-    "cumulative": 12000,
-    "next_level": 550
+    "cumulative": "12,000",
+    "next_level": "550"
   },
   "42": {
-    "cumulative": 12550,
-    "next_level": 550
+    "cumulative": "12,550",
+    "next_level": "550"
   },
   "43": {
-    "cumulative": 13100,
-    "next_level": 600
+    "cumulative": "13,100",
+    "next_level": "600"
   },
   "44": {
-    "cumulative": 13700,
-    "next_level": 600
+    "cumulative": "13,700",
+    "next_level": "600"
   },
   "45": {
-    "cumulative": 14300,
-    "next_level": 650
+    "cumulative": "14,300",
+    "next_level": "650"
   },
   "46": {
-    "cumulative": 14950,
-    "next_level": 650
+    "cumulative": "14,950",
+    "next_level": "650"
   },
   "47": {
-    "cumulative": 15600,
-    "next_level": 700
+    "cumulative": "15,600",
+    "next_level": "700"
   },
   "48": {
-    "cumulative": 16300,
-    "next_level": 700
+    "cumulative": "16,300",
+    "next_level": "700"
   },
   "49": {
-    "cumulative": 17000,
-    "next_level": 750
+    "cumulative": "17,000",
+    "next_level": "750"
   },
   "50": {
-    "cumulative": 17750,
-    "next_level": 750
+    "cumulative": "17,750",
+    "next_level": "750"
   },
   "51": {
-    "cumulative": 18500,
-    "next_level": 800
+    "cumulative": "18,500",
+    "next_level": "800"
   },
   "52": {
-    "cumulative": 19300,
-    "next_level": 800
+    "cumulative": "19,300",
+    "next_level": "800"
   },
   "53": {
-    "cumulative": 20100,
-    "next_level": 850
+    "cumulative": "20,100",
+    "next_level": "850"
   },
   "54": {
-    "cumulative": 20950,
-    "next_level": 850
+    "cumulative": "20,950",
+    "next_level": "850"
   },
   "55": {
-    "cumulative": 21800,
-    "next_level": 900
+    "cumulative": "21,800",
+    "next_level": "900"
   },
   "56": {
-    "cumulative": 22700,
-    "next_level": 900
+    "cumulative": "22,700",
+    "next_level": "900"
   },
   "57": {
-    "cumulative": 23600,
-    "next_level": 950
+    "cumulative": "23,600",
+    "next_level": "950"
   },
   "58": {
-    "cumulative": 24550,
-    "next_level": 950
+    "cumulative": "24,550",
+    "next_level": "950"
   },
   "59": {
-    "cumulative": 25500,
-    "next_level": 1000
+    "cumulative": "25,500",
+    "next_level": "1,000"
   },
   "60": {
-    "cumulative": 26500,
-    "next_level": 1000
+    "cumulative": "26,500",
+    "next_level": "1,000"
   },
   "61": {
-    "cumulative": 27500,
-    "next_level": 1050
+    "cumulative": "27,500",
+    "next_level": "1,050"
   },
   "62": {
-    "cumulative": 28550,
-    "next_level": 1150
+    "cumulative": "28,550",
+    "next_level": "1,150"
   },
   "63": {
-    "cumulative": 29700,
-    "next_level": 1300
+    "cumulative": "29,700",
+    "next_level": "1,300"
   },
   "64": {
-    "cumulative": 31000,
-    "next_level": 1400
+    "cumulative": "31,000",
+    "next_level": "1,400"
   },
   "65": {
-    "cumulative": 32400,
-    "next_level": 1550
+    "cumulative": "32,400",
+    "next_level": "1,550"
   },
   "66": {
-    "cumulative": 33950,
-    "next_level": 1650
+    "cumulative": "33,950",
+    "next_level": "1,650"
   },
   "67": {
-    "cumulative": 35600,
-    "next_level": 1800
+    "cumulative": "35,600",
+    "next_level": "1,800"
   },
   "68": {
-    "cumulative": 37400,
-    "next_level": 1900
+    "cumulative": "37,400",
+    "next_level": "1,900"
   },
   "69": {
-    "cumulative": 39300,
-    "next_level": 2050
+    "cumulative": "39,300",
+    "next_level": "2,050"
   },
   "70": {
-    "cumulative": 41350,
-    "next_level": 2150
+    "cumulative": "41,350",
+    "next_level": "2,150"
   },
   "71": {
-    "cumulative": 43500,
-    "next_level": 2300
+    "cumulative": "43,500",
+    "next_level": "2,300"
   },
   "72": {
-    "cumulative": 45800,
-    "next_level": 2900
+    "cumulative": "45,800",
+    "next_level": "2,900"
   },
   "73": {
-    "cumulative": 48700,
-    "next_level": 3550
+    "cumulative": "48,700",
+    "next_level": "3,550"
   },
   "74": {
-    "cumulative": 52250,
-    "next_level": 4150
+    "cumulative": "52,250",
+    "next_level": "4,150"
   },
   "75": {
-    "cumulative": 56400,
-    "next_level": 4800
+    "cumulative": "56,400",
+    "next_level": "4,800"
   },
   "76": {
-    "cumulative": 61200,
-    "next_level": 5400
+    "cumulative": "61,200",
+    "next_level": "5,400"
   },
   "77": {
-    "cumulative": 66600,
-    "next_level": 6050
+    "cumulative": "66,600",
+    "next_level": "6,050"
   },
   "78": {
-    "cumulative": 72650,
-    "next_level": 6650
+    "cumulative": "72,650",
+    "next_level": "6,650"
   },
   "79": {
-    "cumulative": 79300,
-    "next_level": 7300
+    "cumulative": "79,300",
+    "next_level": "7,300"
   },
   "80": {
-    "cumulative": 86600,
-    "next_level": 7900
+    "cumulative": "86,600",
+    "next_level": "7,900"
   },
   "81": {
-    "cumulative": 94500,
-    "next_level": 8550
+    "cumulative": "94,500",
+    "next_level": "8,550"
   },
   "82": {
-    "cumulative": 103050,
-    "next_level": 11150
+    "cumulative": "103,050",
+    "next_level": "11,150"
   },
   "83": {
-    "cumulative": 114200,
-    "next_level": 13800
+    "cumulative": "114,200",
+    "next_level": "13,800"
   },
   "84": {
-    "cumulative": 128000,
-    "next_level": 16400
+    "cumulative": "128,000",
+    "next_level": "16,400"
   },
   "85": {
-    "cumulative": 144400,
-    "next_level": 19050
+    "cumulative": "144,400",
+    "next_level": "19,050"
   },
   "86": {
-    "cumulative": 163450,
-    "next_level": 21650
+    "cumulative": "163,450",
+    "next_level": "21,650"
   },
   "87": {
-    "cumulative": 185100,
-    "next_level": 24300
+    "cumulative": "185,100",
+    "next_level": "24,300"
   },
   "88": {
-    "cumulative": 209400,
-    "next_level": 26900
+    "cumulative": "209,400",
+    "next_level": "26,900"
   },
   "89": {
-    "cumulative": 236300,
-    "next_level": 29550
+    "cumulative": "236,300",
+    "next_level": "29,550"
   },
   "90": {
-    "cumulative": 265850,
-    "next_level": 32150
+    "cumulative": "265,850",
+    "next_level": "32,150"
   },
   "91": {
-    "cumulative": 298000,
-    "next_level": 34800
+    "cumulative": "298,000",
+    "next_level": "34,800"
   },
   "92": {
-    "cumulative": 332800,
-    "next_level": 42400
+    "cumulative": "332,800",
+    "next_level": "42,400"
   },
   "93": {
-    "cumulative": 375200,
-    "next_level": 50050
+    "cumulative": "375,200",
+    "next_level": "50,050"
   },
   "94": {
-    "cumulative": 425250,
-    "next_level": 57650
+    "cumulative": "425,250",
+    "next_level": "57,650"
   },
   "95": {
-    "cumulative": 482900,
-    "next_level": 65300
+    "cumulative": "482,900",
+    "next_level": "65,300"
   },
   "96": {
-    "cumulative": 548200,
-    "next_level": 72900
+    "cumulative": "548,200",
+    "next_level": "72,900"
   },
   "97": {
-    "cumulative": 621100,
-    "next_level": 80550
+    "cumulative": "621,100",
+    "next_level": "80,550"
   },
   "98": {
-    "cumulative": 701650,
-    "next_level": 88150
+    "cumulative": "701,650",
+    "next_level": "88,150"
   },
   "99": {
-    "cumulative": 789800,
-    "next_level": 95800
+    "cumulative": "789,800",
+    "next_level": "95,800"
   },
   "100": {
-    "cumulative": 885600,
-    "next_level": 114400
+    "cumulative": "885,600",
+    "next_level": "114,400"
   },
-  "100\u2605\n": {
-    "cumulative": 1000000,
-    "next_level": 500000
+  "100\u2605": {
+    "cumulative": "1,000,000",
+    "next_level": "500,000"
   },
-  "100\u2605\u2605\n": {
-    "cumulative": 1500000,
-    "next_level": 1000000
+  "100\u2605\u2605": {
+    "cumulative": "1,500,000",
+    "next_level": "1,000,000"
   },
-  "100\u2605\u2605\u2605\n": {
-    "cumulative": 2500000,
-    "next_level": 2500000
+  "100\u2605\u2605\u2605": {
+    "cumulative": "2,500,000",
+    "next_level": "2,500,000"
   },
-  "100\u2605\u2605\u2605\u2605\n": {
-    "cumulative": 5000000,
-    "next_level": 5000000
+  "100\u2605\u2605\u2605\u2605": {
+    "cumulative": "5,000,000",
+    "next_level": "5,000,000"
   },
-  "100\u2605\u2605\u2605\u2605\u2605\n": {
-    "cumulative": 10000000,
-    "next_level": null
+  "100\u2605\u2605\u2605\u2605\u2605": {
+    "cumulative": "10,000,000",
+    "next_level": "N/A"
   }
 }

@@ -31,23 +31,13 @@ tree: html.HtmlElement = html.fromstring(res.content)
 xpTable: html.HtmlElement = tree.xpath("//table[@class='wikitable']")[0]
 xpList: List[html.HtmlElement] = xpTable.xpath("./tbody/tr")[1:]
 
+# star data is stored as 100\u2605\u2605
+# note that there are no spaces between 100 and the stars
 dataDict = {}
 for row in xpList:
     row_data: List[html.HtmlElement] = row.xpath("./td")
 
-    # will do manual handling of stars
-    if "★" in row_data[0].text:
-        break
-
-    dataDict[int(row_data[0].text)] = {"cumulative": int(row_data[1].text.replace(",", "")), "next_level": int(row_data[2].text.replace(",", ""))}
-
-# handle stars data
-# only 5 stars total right now
-# just remove spaces in between 100 and stars, i.e. result should be something like 100★★★
-# parsing different input options for stars, i.e. 100***, 3 stars, 3*, will happen in command preprocessing
-for row in xpList[-5:]:
-    row_data: List[html.HtmlElement] = row.xpath("./td")
-    dataDict[row_data[0].text.replace(" ", "").strip()] = {"cumulative": int(row_data[1].text.replace(",", "")), "next_level": int(row_data[2].text.replace(",", "")) if row_data[2].text.strip() != "N/A" else None}
+    dataDict[row_data[0].text.replace(" ", "").strip()] = {"cumulative": row_data[1].text.strip(), "next_level": row_data[2].text.strip()}
 
 with open(XP_JSON_FILE, "w+") as f:
     json.dump(dataDict, f, indent=2)
