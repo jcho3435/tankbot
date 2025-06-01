@@ -49,7 +49,7 @@ async def weapon_info_command(ctx: commands.Context, weapon: str):
     delta = datetime.datetime.now() - updated
     if delta.days >= 10:
         try:
-            update_weapon_info(weapon)
+            update_weapon_info(weapon) # TODO: FIX THIS TO HANDLE CONCURRENT WRITES
         except Exception as e:
             print(f"Error in pulling updated weapon info from wiki (wep: {weapon}). Proceeding with old data.")
             print("Error:", e)

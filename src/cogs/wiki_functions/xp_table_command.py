@@ -1,18 +1,15 @@
 import datetime, re
 
 from src.helpers.global_vars import xp_table, WIKI_BASE_URL
+from src.views.pagination import PaginationView
 
 from discord.ext import commands
 import discord
 
-class XPPageView(discord.ui.View):
-    def __init__(self, ctx: commands.Context, per_page: int = 10, timeout: int = 120, color: discord.Color = discord.Color.from_str("#A8A8A8")):
-        super().__init__(timeout=timeout)
-        self.ctx = ctx
-        self.per_page = per_page
-        self.current_page = 0
-        self.max_page = (len(xp_table) - 1) // per_page
-        self.color = color
+class XPPageView(PaginationView):
+    def __init__(self, ctx: commands.Context, per_page: int = 10, current_page: int = 0, color: discord.Color = discord.Color.from_str("#A8A8A8"), timeout: int = 60):
+        # only keeping xp_table.keys in order to save space
+        super().__init__(ctx, list(xp_table.keys()), per_page, current_page, color, timeout)
 
     def build_embed(self) -> discord.Embed:
         start = self.current_page * self.per_page
@@ -31,36 +28,6 @@ class XPPageView(discord.ui.View):
         embed.add_field(name="XP to next level", value=nextLevelField)
         embed.set_footer(text=f"Page {self.current_page + 1} of {self.max_page + 1}")
         return embed
-
-    async def update(self, interaction: discord.Interaction):
-        embed = self.build_embed()
-        await interaction.response.edit_message(embed=embed, view=self)
-
-    @discord.ui.button(label="\u23EE", style=discord.ButtonStyle.primary)
-    async def firstPage(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.current_page = 0
-        await self.update(interaction)
-
-    @discord.ui.button(label="\u25C0", style=discord.ButtonStyle.primary)
-    async def previousPage(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if self.current_page > 0:
-            self.current_page -= 1
-            await self.update(interaction)
-        else:
-            await interaction.response.defer()
-
-    @discord.ui.button(label="\u25B6", style=discord.ButtonStyle.primary)
-    async def nextPage(self, interaction: discord.Interaction, button: discord.ui.Button):
-        if self.current_page < self.max_page:
-            self.current_page += 1
-            await self.update(interaction)
-        else:
-            await interaction.response.defer()
-
-    @discord.ui.button(label="\u23ED", style=discord.ButtonStyle.primary)
-    async def lastPage(self, interaction: discord.Interaction, button: discord.ui.Button):
-        self.current_page = self.max_page
-        await self.update(interaction)
 
 async def xp_table_command(ctx: commands.Context, level: str):
     if not level:
