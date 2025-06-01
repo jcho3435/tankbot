@@ -13,8 +13,6 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
 
     def __init__(self, bot):
         self.bot = bot
-        self.commandCount = 0
-        self.startTime = datetime.datetime.now()
 
     # Ugly workaround for help slash command
     @app_commands.command(name="help", description="Get command information.")
@@ -28,13 +26,13 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     @commands.hybrid_command(aliases=COMMAND_COUNT_ALIASES)
     async def command_count(self, ctx: commands.Context):
         """Responds with the number of commands that have been run since the last time the bot went offline."""
-        await ctx.send(f"**{self.commandCount}** command(s) have been sent since the bot last went went offline.")
+        await ctx.send(f"**{ctx.bot.commandCount}** command(s) have been sent since the bot last went went offline.")
 
     # uptime
     @commands.hybrid_command()
     async def uptime(self, ctx: commands.Context):
         """Responds with the amount of time elapsed since the bot has last come online."""
-        time = datetime.datetime.now() - self.startTime
+        time = datetime.datetime.now() - ctx.bot.startTime
         await ctx.send(f"The bot has been online for **{format_uptime(time)}**!")
 
 async def setup(bot: commands.Bot):

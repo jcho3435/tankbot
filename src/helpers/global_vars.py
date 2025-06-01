@@ -3,15 +3,17 @@ import json
 DEFAULT_PREFIX = ">>"
 WIKI_BASE_URL = "https://shellshocklive.fandom.com/wiki"
 
+
+def load_json_file(filename):
+    with open(filename, "r") as f:
+        return json.load(f)
+    
 # weapons
 WEAPONS_JSON_FILE = "data/weapons.json"
-
-with open(WEAPONS_JSON_FILE, "r+") as f:
-    weaponData: dict = json.load(f)
-    weapons = list(weaponData.keys())
+weaponData = load_json_file(WEAPONS_JSON_FILE)
+weapons = list(weaponData.keys())
 
 # xp
 XP_JSON_FILE = "data/xp_table.json"
-with open(XP_JSON_FILE) as f:
-    xp_table: dict = json.load(f)
-    level_options = list(xp_table.keys()) + [f"{i}*" for i in range(1, 6)]
+xp_table = load_json_file(XP_JSON_FILE)
+level_options = list(xp_table.keys()) + [f"{i}*" for i in range(1, 6)]

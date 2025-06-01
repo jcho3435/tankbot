@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands, fancyhelp
 
 import os, asyncio
+import datetime
 
 from src.helpers.command_preprocessing import preprocess_command
 from src.helpers.global_vars import DEFAULT_PREFIX
@@ -10,10 +11,20 @@ from src.helpers.global_vars import DEFAULT_PREFIX
 from src.cogs.misc_functions.misc import Miscellaneous 
 import discord.ext.commands
 
+
+class Bot(commands.Bot):
+    # static globals
+    commandCount = 0
+    startTime = datetime.datetime.now()
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+
 intents = discord.Intents.default()
 intents.message_content = True
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(DEFAULT_PREFIX), intents=intents, help_command=fancyhelp.EmbeddedHelpCommand())
+bot = Bot(command_prefix=commands.when_mentioned_or(DEFAULT_PREFIX), intents=intents, help_command=fancyhelp.EmbeddedHelpCommand())
 
 #region event handlers
 # On ready event
@@ -27,9 +38,7 @@ async def on_ready():
 # On command event
 @bot.event
 async def on_command(ctx):
-    cog: Miscellaneous = bot.get_cog("Miscellaneous") 
-    if cog:
-        cog.commandCount += 1 # Maybe replace this with a setter function, an incrementer function, or something else, then have this as a static field
+    bot.commandCount += 1
 
 # On error event
 @bot.event
