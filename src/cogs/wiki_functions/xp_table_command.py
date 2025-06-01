@@ -5,22 +5,68 @@ from src.helpers.global_vars import xp_table, WIKI_BASE_URL
 from discord.ext import commands
 import discord
 
-async def xp_table_command(ctx: commands.Context, level: str):
-    embed = discord.Embed(url=f"{WIKI_BASE_URL}/XP", title="XP_table", timestamp=datetime.datetime.now())
-    if not level:
-        levelField = ""
-        cumulativeField = ""
-        nextLevelField = ""
-        for i in range(10):
-            
-            levelField += f"{i+1}\n"
-            cumulativeField += f"{xp_table[f"{i+1}"]["cumulative"]}\n"
-            nextLevelField += f"{xp_table[f"{i+1}"]["next_level"]}\n"
+class XPPageView(discord.ui.View):
+    def __init__(self, ctx: commands.Context, per_page: int = 10, timeout: int = 120, color: discord.Color = discord.Color.from_str("#A8A8A8")):
+        super().__init__(timeout=timeout)
+        self.ctx = ctx
+        self.per_page = per_page
+        self.current_page = 0
+        self.max_page = (len(xp_table) - 1) // per_page
+        self.color = color
+
+    def build_embed(self) -> discord.Embed:
+        start = self.current_page * self.per_page
+        end = start + self.per_page
+        embed = discord.Embed(url=f"{WIKI_BASE_URL}/XP", title="XP Table", timestamp=datetime.datetime.now(), color=self.color)
+
+        levelField, cumulativeField, nextLevelField = "", "", ""
+        keys = list(xp_table.keys())[start:end]
+        for key in keys:
+            levelField += f"{key}\n"
+            cumulativeField += f"{xp_table[key]['cumulative']}\n"
+            nextLevelField += f"{xp_table[key]['next_level']}\n"
 
         embed.add_field(name="Level", value=levelField)
         embed.add_field(name="Cumulative XP", value=cumulativeField)
         embed.add_field(name="XP to next level", value=nextLevelField)
-        # HANDLE PAGINATION
+        embed.set_footer(text=f"Page {self.current_page + 1} of {self.max_page + 1}")
+        return embed
+
+    async def update(self, interaction: discord.Interaction):
+        embed = self.build_embed()
+        await interaction.response.edit_message(embed=embed, view=self)
+
+    @discord.ui.button(label="\u23EE", style=discord.ButtonStyle.primary)
+    async def firstPage(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.current_page = 0
+        await self.update(interaction)
+
+    @discord.ui.button(label="\u25C0", style=discord.ButtonStyle.primary)
+    async def previousPage(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if self.current_page > 0:
+            self.current_page -= 1
+            await self.update(interaction)
+        else:
+            await interaction.response.defer()
+
+    @discord.ui.button(label="\u25B6", style=discord.ButtonStyle.primary)
+    async def nextPage(self, interaction: discord.Interaction, button: discord.ui.Button):
+        if self.current_page < self.max_page:
+            self.current_page += 1
+            await self.update(interaction)
+        else:
+            await interaction.response.defer()
+
+    @discord.ui.button(label="\u23ED", style=discord.ButtonStyle.primary)
+    async def lastPage(self, interaction: discord.Interaction, button: discord.ui.Button):
+        self.current_page = self.max_page
+        await self.update(interaction)
+
+async def xp_table_command(ctx: commands.Context, level: str):
+    if not level:
+        view = XPPageView(ctx)
+        embed = view.build_embed()
+        await ctx.send(embed=embed, view=view)
     else:
         # preprocess for star levels and valid levels
         pattern = r"100\*{1,5}|[1-5](\*|stars?)"
@@ -37,10 +83,10 @@ async def xp_table_command(ctx: commands.Context, level: str):
                 level = f"100{'\u2605'*int(c)}"
         else:
             raise commands.BadArgument("Invalid argument")
-
+        
+        embed = discord.Embed(url=f"{WIKI_BASE_URL}/XP", title="XP_table", timestamp=datetime.datetime.now(), color = discord.Color.from_str("#A8A8A8"))
         embed.add_field(name="Level", value=level)
         embed.add_field(name="Cumulative XP", value=xp_table[level]["cumulative"])
         embed.add_field(name="XP to next level", value=xp_table[level]["next_level"])
 
-
-    await ctx.send(embed=embed)
+        await ctx.send(embed=embed)
