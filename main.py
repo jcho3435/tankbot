@@ -63,6 +63,7 @@ async def load():
     cogFiles = [
         "misc",
         "wiki",
+        "game"
     ]
 
     for file in cogFiles:

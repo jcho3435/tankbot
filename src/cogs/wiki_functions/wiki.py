@@ -3,7 +3,7 @@ from discord import app_commands
 import discord
 
 from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES, XP_ALIASES
-from src.helpers.global_vars import weapons
+from src.helpers.global_vars import weapons, level_options
 from src.cogs.wiki_functions.weapon_info_command import weapon_info_command
 from src.cogs.wiki_functions.weapon_tips_command import weapon_tips_command
 from src.cogs.wiki_functions.xp_table_command import xp_table_command
@@ -47,19 +47,30 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
     #region Autocompletes
     @weapon_info.autocomplete("weapon")
     @weapon_tips.autocomplete("weapon")
+    @xp.autocomplete("level")
     async def weapon_autocomplete(self, interaction: discord.Interaction, current: str):
         maxLen, currLen = 10, 0
         choices = []
         current = current.lower()
-        for w in weapons:
-            if current in w:
-                choices.append(app_commands.Choice(name=w, value=w))
+        command = interaction.command.name
+        
+        selections = None
+        if command in ["weapon_info", "weapon_tips"]:
+            selections = weapons
+        elif command in ["xp"]:
+            selections = level_options
+        else:
+            raise Exception(f"Failed to find valid command: {command}\n")
+        
+        for s in selections:
+            if current in s:
+                choices.append(app_commands.Choice(name=s, value=s))
                 currLen += 1
                 if currLen >= maxLen:
                     return choices
                 
         return choices
-    
+
     #endregion
 
 async def setup(bot: commands.Bot):
