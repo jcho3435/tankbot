@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-import datetime
+import datetime, asyncio
 
 from src.helpers.global_vars import WIKI_BASE_URL
 from src.helpers.global_vars import weapons, weaponData
@@ -49,7 +49,7 @@ async def weapon_info_command(ctx: commands.Context, weapon: str):
     delta = datetime.datetime.now() - updated
     if delta.days >= 10:
         try:
-            update_weapon_info(weapon) # TODO: FIX THIS TO HANDLE CONCURRENT WRITES
+            await asyncio.to_thread(update_weapon_info, weapon) # i dont know why, but this is necessary to stop blocking
         except Exception as e:
             print(f"Error in pulling updated weapon info from wiki (wep: {weapon}). Proceeding with old data.")
             print("Error:", e)

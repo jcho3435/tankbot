@@ -3,6 +3,7 @@ Function to pull all necessary weapon data from the wiki
 """
 
 import requests, re, json
+from filelock import FileLock
 import datetime
 from lxml import html
 
@@ -45,8 +46,10 @@ def update_weapon_info(weapon: str) -> None:
     if t == maxTries:
         raise lastException
     else:
-        with open(WEAPONS_JSON_FILE, "w+") as f:
-            json.dump(weaponData, f, indent=2)
+        lock = FileLock(WEAPONS_JSON_FILE + ".lock", timeout=10)
+        with lock:
+            with open(WEAPONS_JSON_FILE, "w+") as f:
+                json.dump(weaponData, f, indent=2)
 
 
 def get_weapon_info(wepId: str) -> dict:

@@ -5,7 +5,7 @@ from src.helpers.global_vars import weapons, weaponData
 from src.helpers.extract_wiki_weapon_info import update_weapon_info
 from src.helpers.global_vars import WIKI_BASE_URL
 
-import datetime
+import datetime, asyncio
 
 # imports for type hinting
 from typing import List
@@ -50,7 +50,7 @@ async def weapon_tips_command(ctx: commands.Context, weapon: str):
     delta = datetime.datetime.now() - updated
     if delta.days >= 10:
         try:
-            update_weapon_info(weapon) # TODO: FIX THIS TO HANDLE CONCURRENT WRITES
+            await asyncio.to_thread(update_weapon_info, weapon) # this is necessary to stop blocking
         except Exception as e:
             print(f"Error in pulling updated weapon info from wiki (wep: {weapon}). Proceeding with old data.")
             print("Error:", e)

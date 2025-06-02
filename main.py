@@ -8,7 +8,6 @@ from src.helpers.command_preprocessing import preprocess_command
 from src.helpers.global_vars import DEFAULT_PREFIX
 
 # imports for type hinting
-from src.cogs.misc_functions.misc import Miscellaneous 
 import discord.ext.commands
 
 
@@ -16,6 +15,7 @@ class Bot(commands.Bot):
     # static globals
     commandCount = 0
     startTime = datetime.datetime.now()
+    guessTheWepGames = {}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -55,14 +55,18 @@ async def on_command_error(ctx: discord.ext.commands.context.Context, error):
 # on message event
 @bot.event
 async def on_message(message: discord.message.Message):
-    if message.author.bot:
-        return
-    if not message.content.startswith(DEFAULT_PREFIX):
+    if message.author.bot: # skip bot responses
         return
     
-    message.content = preprocess_command(message.content) # preprocess commands, i.e. ensure all letters are lowercase, properly insert underscores in some args, etc.
+    if message.channel.id in bot.guessTheWepGames and not message.content.startswith(DEFAULT_PREFIX): # handle guess the wep games
+        print("message received!")
+        return
 
-    await bot.process_commands(message)
+    if message.content.startswith(DEFAULT_PREFIX): # commands
+        message.content = preprocess_command(message.content) # preprocess commands, i.e. ensure all letters are lowercase, properly insert underscores in some args, etc.
+        await bot.process_commands(message)
+    
+    
 
 #endregion
 
