@@ -6,6 +6,7 @@ import datetime
 
 from src.helpers.command_preprocessing import preprocess_command
 from src.helpers.global_vars import DEFAULT_PREFIX
+from src.helpers.error_embed import build_error_embed
 
 # imports for type hinting
 import discord.ext.commands
@@ -43,14 +44,17 @@ async def on_command(ctx):
 # On error event
 @bot.event
 async def on_command_error(ctx: discord.ext.commands.context.Context, error):
+    errorMessage = ""
     if isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send(f"\u26A0\uFE0F Missing argument: `{error.param.name}`. Please check the command usage using `>>help {ctx.command}`.")
+        errorMessage = f"Missing argument: `{error.param.name}`. Please check the command usage using `>>help {ctx.command}`."
     elif isinstance(error, commands.BadArgument) and error.args[-1].startswith("Invalid argument"):
-        await ctx.send(f"\u26A0\uFE0F Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
+        errorMessage = error.args[-1]
     elif isinstance(error, commands.CommandNotFound):
-        await ctx.send(f"\u26A0\uFE0F Command not recognized: Use `/help` or `{DEFAULT_PREFIX}help` to see a list of commands.")
+        errorMessage = f"Command not recognized: Use `/help` or `{DEFAULT_PREFIX}help` to see a list of commands."
     else:
         raise error
+    
+    await ctx.send(embed=build_error_embed(errorMessage, ctx.author))
 
 # on message event
 @bot.event

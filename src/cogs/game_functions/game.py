@@ -14,7 +14,7 @@ class Games(commands.Cog, name="Games"):
     
     # guess_the_weapon
     @commands.hybrid_command(aliases=GUESS_THE_WEAPON_ALIASES)
-    @app_commands.describe(rounds="Number of rounds (1-10)")
+    @app_commands.describe(rounds="Number of rounds (1-5). Default = 1")
     async def guess_the_weapon(self, ctx: commands.Context, rounds: str = "1"):
         """Start a game of guess the weapon."""
         await guess_the_weapon(ctx, rounds)

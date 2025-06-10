@@ -5,9 +5,14 @@ from discord.ext import commands
 import discord
 
 async def guess_the_weapon(ctx: commands.Context, rounds: str):
+    isError = False
     if not rounds.isdigit():
-        raise ("Invalid argument:...")
+        isError = True
     rounds = int(rounds)
+    if rounds < 1 or rounds > 5:
+        isError = True
+    if isError:
+        raise commands.BadArgument(f"Invalid argument: `rounds` must be a numeric value between 1 and 5 inclusive.")
 
     # game starts
     if ctx.channel.id in ctx.bot.guessTheWepGames:

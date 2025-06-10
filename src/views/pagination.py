@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from src.helpers.error_embed import build_error_embed
+
 from typing import Iterable
 
 class PaginationView(discord.ui.View):
@@ -46,8 +48,9 @@ class PaginationView(discord.ui.View):
         self.current_page = self.max_page
         await self.update(interaction)
 
-    async def interaction_check(self, interaction: discord.Interaction):
+    async def interaction_check(self, interaction: discord.Interaction, message: str):
         if interaction.user.id != self.ctx.author.id:
-            await interaction.response.send_message("Find your own xp table to use, bud.\n-# Use `/xp` or `>>xp`.", ephemeral=True)
+            embed = build_error_embed(message, interaction.user)
+            await interaction.response.send_message(embed=embed, ephemeral=True)
             return False
         return True

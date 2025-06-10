@@ -40,7 +40,7 @@ def construct_wep_info_embed(weapon: str) -> discord.Embed:
 
 async def weapon_info_command(ctx: commands.Context, weapon: str):
     if weapon not in weapons:
-        raise commands.BadArgument("Invalid argument")
+        raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
     
     wepData: dict = weaponData[weapon]
 

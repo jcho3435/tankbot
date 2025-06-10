@@ -28,6 +28,9 @@ class XPPageView(PaginationView):
         embed.add_field(name="XP to next level", value=nextLevelField)
         embed.set_footer(text=f"Page {self.current_page + 1} of {self.max_page + 1}")
         return embed
+    
+    def interaction_check(self, interaction):
+        return super().interaction_check(interaction, "Find your own xp table to use, bud.\n-# Use `/xp` or `>>xp`.")
 
 async def xp_table_command(ctx: commands.Context, level: str):
     if not level:
@@ -38,10 +41,9 @@ async def xp_table_command(ctx: commands.Context, level: str):
         # preprocess for star levels and valid levels
         pattern = r"100\*{1,5}|[1-5](\*|stars?)"
         if level.isdigit():
-            level = level.strip("0")
             l = int(level)
             if l < 1 or l > 100:
-                raise commands.BadArgument("Invalid argument")
+                raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
         elif re.fullmatch(pattern, level):
             if re.fullmatch(r"100\*{1,5}", level):
                 level = level.replace("*", "\u2605")
@@ -49,7 +51,7 @@ async def xp_table_command(ctx: commands.Context, level: str):
                 c = level[0]
                 level = f"100{'\u2605'*int(c)}"
         else:
-            raise commands.BadArgument("Invalid argument")
+            raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
         
         embed = discord.Embed(url=f"{WIKI_BASE_URL}/XP", title="XP_table", timestamp=datetime.datetime.now(), color = discord.Color.from_str("#A8A8A8"))
         embed.add_field(name="Level", value=level)
