@@ -5,7 +5,6 @@ import datetime
 
 from src.helpers.global_vars import WIKI_BASE_URL
 from src.helpers.global_vars import weapons, weaponData
-from src.helpers.custom_emojis import WEAPON_ICONS
 
 def construct_wep_tree_embed(wepList: list) -> discord.Embed:
     """
