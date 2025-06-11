@@ -2,10 +2,11 @@ from discord.ext import commands
 from discord import app_commands
 import discord
 
-from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES, XP_ALIASES
+from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES, WEAPON_TREE_ALIASES, XP_ALIASES
 from src.helpers.global_vars import weapons, level_options
 from src.cogs.wiki_functions.weapon_info_command import weapon_info_command
 from src.cogs.wiki_functions.weapon_tips_command import weapon_tips_command
+from src.cogs.wiki_functions.weapon_tree_command import weapon_tree_command
 from src.cogs.wiki_functions.xp_table_command import xp_table_command
 
 class QuickWiki(commands.Cog, name="Quick Wiki"):
@@ -16,7 +17,7 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
 
     #region Commands
     # weapon info command
-    @commands.hybrid_command(name="weapon_info", aliases=WEAPON_INFO_ALIASES)
+    @commands.hybrid_command(aliases=WEAPON_INFO_ALIASES)
     @app_commands.describe(weapon="Choose a weapon to get info on.")
     async def weapon_info(self, ctx: commands.Context, weapon: str):
         """Fetches and displays weapon information from the ShellShock Live wiki."""
@@ -25,7 +26,7 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
 
     # weapon tips command
     @commands.hybrid_command(
-        name="weapon_tips", aliases=WEAPON_TIPS_ALIASES, 
+        aliases=WEAPON_TIPS_ALIASES, 
         help="Fetches and displays weapon tips and trivia from the ShellShock Live wiki. Cannot display videos from the wiki.",
         description="Fetches and displays weapon tips and trivia from the ShellShock Live wiki."
     )
@@ -33,6 +34,11 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
     async def weapon_tips(self, ctx: commands.Context, weapon: str):
         await weapon_tips_command(ctx, weapon)
 
+    @commands.hybrid_command(aliases=WEAPON_TREE_ALIASES)
+    @app_commands.describe(weapon="Choose a weapon to get the weapon tree of.")
+    async def weapon_tree(self, ctx: commands.Context, weapon: str):
+        """Fetches and displays weapon tree info """
+        await weapon_tree_command(ctx, weapon)
 
     # xp command
     @commands.hybrid_command(name="xp", aliases=XP_ALIASES)
@@ -47,6 +53,7 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
     #region Autocompletes
     @weapon_info.autocomplete("weapon")
     @weapon_tips.autocomplete("weapon")
+    @weapon_tree.autocomplete("weapon")
     @xp.autocomplete("level")
     async def weapon_autocomplete(self, interaction: discord.Interaction, current: str):
         maxLen, currLen = 10, 0
@@ -54,8 +61,9 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
         current = current.lower()
         command = interaction.command.name
         
+        # decise which list of selections to use
         selections = None
-        if command in ["weapon_info", "weapon_tips"]:
+        if command in ["weapon_info", "weapon_tips", "weapon_tree"]:
             selections = weapons
         elif command in ["xp"]:
             selections = level_options

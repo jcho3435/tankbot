@@ -3,7 +3,7 @@ from discord.ext import commands
 
 from src.helpers.command_aliases import GUESS_THE_WEAPON_ALIASES
 from src.cogs.games_functions.guess_the_weapon import guess_the_weapon_start
-from src.cogs.games_functions.quit import quit
+from src.cogs.games_functions.quit_command import quit_command
 
 class Games(commands.Cog, name="Games"):
     """Text based games."""
@@ -23,7 +23,7 @@ class Games(commands.Cog, name="Games"):
     @commands.hybrid_command()
     async def quit(self, ctx: commands.Context):
         """Quit all active games you have started in the current channel"""
-        await quit(ctx)
+        await quit_command(ctx)
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Games(bot))

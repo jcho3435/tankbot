@@ -13,7 +13,7 @@ from src.helpers.global_vars import weaponData
 #imports for typing
 from typing import List
 
-IGNORED_STATS_FIELDS = ["Requirements"]
+EXTERNAL_STATS_FIELDS = ["Requirements"]
 TIPS_AND_TRIVIA_IDS = ["Tips_&_Trivia", "Tips", "Trivia", "Tips_And_Trivia"]
 
 def escape_special_chars(s: str) -> str:
@@ -60,6 +60,10 @@ def get_weapon_info(wepId: str) -> dict:
         wepId (str): The weapon id, which is used to locate the weapon on the wiki.
     """
     res = requests.get(f"{WIKI_BASE_URL}/{wepId}")
+
+    #extract base request url
+    urlPath = res.request.path_url
+    baseWepUrl = WIKI_BASE_URL.strip("/wiki") + urlPath
     tree: html.HtmlElement = html.fromstring(res.content)
 
     wepHeader: html.HtmlElement = tree.xpath(f"//span[@id='{wepId}']")[0].getparent()
@@ -84,10 +88,12 @@ def get_weapon_info(wepId: str) -> dict:
     wepStatsTable: html.HtmlElement = wepInfoTable.xpath(".//table[@class='weaponstats']/tbody")[0]
     wepStatsRows: List[html.HtmlElement] = wepStatsTable.xpath("./tr")
     stats = {}
+    ext_stats = {k: None for k in EXTERNAL_STATS_FIELDS}
     for tr in wepStatsRows:
         tds: List[html.HtmlElement] = tr.xpath("./td")
         label = tds[0].xpath("string(.)").strip()
-        if label in IGNORED_STATS_FIELDS:
+        if label in EXTERNAL_STATS_FIELDS:
+            ext_stats[label] = escape_special_chars(tds[1].xpath("string(.)").strip())
             continue
         stats[label] = escape_special_chars(tds[1].xpath("string(.)").strip())
 
@@ -117,11 +123,15 @@ def get_weapon_info(wepId: str) -> dict:
 
         tipsDict["content"].append(text)
 
-    return {
+    retVal = {
         "desc": wepDesc, 
         "color": bgColorHex, 
         "imgUrl": imgUrl, 
+        "baseWikiUrl": baseWepUrl,
         "stats": stats,
-        "tips": tipsDict,
-        "updated": datetime.datetime.now().isoformat()
+        "tips": tipsDict
     }
+    retVal.update({k.lower(): v for k, v in ext_stats.items()})
+    retVal.update({"updated": datetime.datetime.now().isoformat()})
+
+    return retVal

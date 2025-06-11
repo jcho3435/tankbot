@@ -34,7 +34,7 @@ def construct_wep_info_embed(weapon: str) -> discord.Embed:
     for i in range(neededFields):
         embed.add_field(name="", value="")
 
-    embed.set_footer(text="Incorrect or missing information? Help improve the ShellShock Live Wiki!\n")
+    embed.set_footer(text="Incorrect or missing information? Help improve the ShellShock Live Wiki!")
 
     return embed
 

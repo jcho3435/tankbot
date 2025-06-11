@@ -5,13 +5,13 @@ preprocess_command(msg) should ever be directly called.
 """
 
 from src.helpers.global_vars import DEFAULT_PREFIX
-from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES, XP_ALIASES
+from src.helpers.command_aliases import WEAPON_INFO_ALIASES, WEAPON_TIPS_ALIASES, WEAPON_TREE_ALIASES, XP_ALIASES
 
 #region processing functions
 
-# For commands: weaponinfo, weapontips
+# For commands: weapon_info, weapon_tips, weapon_tree
 # 1 arg expected: weapon name
-def process_weapon_info_and_tips_command_args(args: str) -> str:
+def process_weapon_name_in_command_args(args: str) -> str:
     args = args.replace("-", " ").split() #removes consecutive spaces, replaces with a single _
     return "_".join(args)
 
@@ -33,8 +33,8 @@ def preprocess_command(msg: str) -> str:
     
     # weapon info
     # weapon tips
-    if cmd == "weapon_info" or cmd in WEAPON_INFO_ALIASES or cmd == "weapon_tips" or cmd in WEAPON_TIPS_ALIASES:
-        processed_args = process_weapon_info_and_tips_command_args(args)
+    if cmd == "weapon_info" or cmd in WEAPON_INFO_ALIASES or cmd == "weapon_tips" or cmd in WEAPON_TIPS_ALIASES or cmd == "weapon_tree" or cmd in WEAPON_TREE_ALIASES:
+        processed_args = process_weapon_name_in_command_args(args)
         processed_cmd = f"{DEFAULT_PREFIX}{cmd} {processed_args}"
 
         # Hard coded replacements for weapon aliases

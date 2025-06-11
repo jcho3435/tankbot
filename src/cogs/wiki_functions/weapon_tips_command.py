@@ -22,6 +22,7 @@ def construct_weapon_tips_embed(weapon: str) -> discord.Embed:
 
     embed = discord.Embed(title=f"{wepId.replace("_", " ")} Tips and Trivia", timestamp=datetime.datetime.now(), color=color)
     embed.set_thumbnail(url=imageUrl)
+    embed.set_footer(text="Incorrect or missing information? Help improve the ShellShock Live Wiki!")
 
     # return early if there is not tips/trivia section
     if not wepData["tips"]["sectionId"]:
@@ -34,8 +35,6 @@ def construct_weapon_tips_embed(weapon: str) -> discord.Embed:
     tips: List[str] = wepData["tips"]["content"]
     for tip in tips:
         embed.add_field(name = "", value=f"\u2022 {tip}", inline=False)
-
-    embed.set_footer(text="Incorrect or missing information? Help improve the ShellShock Live Wiki!\n")
 
     return embed
 

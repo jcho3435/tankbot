@@ -36,9 +36,15 @@ weapons: List[str] = [wep.text for wep in wepList]
 
 # Weapons should be stored as 
 # {"weapon_name": 
-#   {"wepId": "Weapon-Name", "desc": "weapon description", "imageUrl": "wepImageUrl",
-#   "color": "#HEXCOL", "stats": {...}, "tips": {"sectionId": "ID", "content": [...]},
-#   "updated": "ISO format datetime string"}
+#   {
+#      "wepId": "Weapon-Name", "desc": "weapon description", "imageUrl": "wepImageUrl",
+#      "baseWikiUrl": "baseUrl", "color": "#HEXCOL", "stats": {...},
+#      "tips": {"sectionId": "ID", "content": [...]}, "requirements": "some req",
+#      "updated": "ISO format datetime string"
+#   }
+#  "weapon_name2": {...}
+# }
+
 
 dataDict = {}
 wepCount = len(weapons)
