@@ -1,10 +1,9 @@
 from discord import app_commands
 from discord.ext import commands
-import discord
 
 from src.helpers.command_aliases import GUESS_THE_WEAPON_ALIASES
-from src.cogs.game_functions.guess_the_weapon import guess_the_weapon
-from src.cogs.game_functions.quit import quit
+from src.cogs.games_functions.guess_the_weapon import guess_the_weapon_start
+from src.cogs.games_functions.quit import quit
 
 class Games(commands.Cog, name="Games"):
     """Text based games."""
@@ -16,8 +15,8 @@ class Games(commands.Cog, name="Games"):
     @commands.hybrid_command(aliases=GUESS_THE_WEAPON_ALIASES)
     @app_commands.describe(rounds="Number of rounds (1-5). Default = 1")
     async def guess_the_weapon(self, ctx: commands.Context, rounds: str = "1"):
-        """Start a game of guess the weapon."""
-        await guess_the_weapon(ctx, rounds)
+        """Start a game of guess the weapon. Times out after 2 minutes with no interaction."""
+        await guess_the_weapon_start(ctx, rounds)
 
 
     # quit all games

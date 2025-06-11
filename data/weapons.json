@@ -15,7 +15,7 @@
       "sectionId": null,
       "content": []
     },
-    "updated": "2025-05-19T03:36:08.190187"
+    "updated": "2025-06-12T00:31:58.624931"
   },
   "big_shot": {
     "wepId": "Big_Shot",
@@ -51,7 +51,7 @@
       "sectionId": null,
       "content": []
     },
-    "updated": "2025-05-19T03:36:09.642649"
+    "updated": "2025-06-12T00:32:01.959477"
   },
   "massive_shot": {
     "wepId": "Massive_Shot",
@@ -1821,7 +1821,7 @@
       "sectionId": null,
       "content": []
     },
-    "updated": "2025-05-19T03:37:07.202885"
+    "updated": "2025-06-11T02:51:52.999688"
   },
   "mega_pixel": {
     "wepId": "Mega-Pixel",
@@ -1839,7 +1839,7 @@
       "sectionId": null,
       "content": []
     },
-    "updated": "2025-05-19T03:37:08.151944"
+    "updated": "2025-06-11T02:51:59.761312"
   },
   "super_pixel": {
     "wepId": "Super-Pixel",
@@ -5761,7 +5761,7 @@
       "sectionId": null,
       "content": []
     },
-    "updated": "2025-05-19T03:39:11.833622"
+    "updated": "2025-06-12T00:32:33.092567"
   },
   "deceiver": {
     "wepId": "Deceiver",
@@ -5797,7 +5797,7 @@
       "sectionId": null,
       "content": []
     },
-    "updated": "2025-05-19T03:39:13.291718"
+    "updated": "2025-06-12T00:32:26.221168"
   },
   "rocket_fire": {
     "wepId": "Rocket_Fire",
@@ -5824,7 +5824,7 @@
         "The animation that plays when a shot goes off-screen is played for both when the hidden arc leaves the screen, as well as when a rocket leaves the screen, doubling the amount of animations played."
       ]
     },
-    "updated": "2025-05-19T03:39:13.891067"
+    "updated": "2025-06-12T00:36:25.600040"
   },
   "rocket_cluster": {
     "wepId": "Rocket_Cluster",
@@ -6215,7 +6215,7 @@
       "sectionId": null,
       "content": []
     },
-    "updated": "2025-05-19T03:39:25.309931"
+    "updated": "2025-06-12T00:24:33.921247"
   },
   "helianthus": {
     "wepId": "Helianthus",
@@ -6387,7 +6387,7 @@
         "If you are at the same elevation as your target enemy tank. You can shoot at 100 power at a high angle with Lottery and deal 118-129 damage. For the most part, if you want to achieve maximum damage with Lottery, you have to be at a higher elevation than your target tank."
       ]
     },
-    "updated": "2025-05-19T03:39:30.886188"
+    "updated": "2025-06-12T00:34:41.769489"
   },
   "ultra_jackpot": {
     "wepId": "Ultra-Jackpot",
@@ -6427,7 +6427,7 @@
         "If you are at the same elevation as your target enemy tank. You can shoot at 100 power at a high angle with Lottery and deal 118-129 damage. For the most part, if you want to achieve maximum damage with Lottery, you have to be at a higher elevation than your target tank."
       ]
     },
-    "updated": "2025-05-19T03:39:32.011475"
+    "updated": "2025-06-12T00:31:54.712195"
   },
   "early_bird": {
     "wepId": "Early_Bird",
@@ -7587,7 +7587,7 @@
       "sectionId": null,
       "content": []
     },
-    "updated": "2025-05-19T03:40:09.843311"
+    "updated": "2025-06-12T00:34:16.857197"
   },
   "beaconator": {
     "wepId": "Beaconator",
@@ -8523,7 +8523,7 @@
         "The animation that plays when a shot goes off-screen is played for both when the hidden arc leaves the screen, as well as when a visible shot leaves the screen. Witch has a single hidden arc, while both brooms share an arc, as well as both ghouls; which can lead to extra animations being played."
       ]
     },
-    "updated": "2025-05-19T03:40:37.785583"
+    "updated": "2025-06-12T00:36:11.491294"
   },
   "witches_broom": {
     "wepId": "Witches_Broom",
@@ -8592,10 +8592,12 @@
     "tips": {
       "sectionId": "Tips_&_Trivia",
       "content": [
-        ""
+        "",
+        "If you must shoot Botherer and its upgrades at a range it is best landed if your opponent is near a bumper or if the angle it targets the enemy tank at gives a possibility of hitting enemy tanks behind your opponent.",
+        "If the arc of this weapon passes too close to an enemy, it will lock on to them which can ruin its potential damage."
       ]
     },
-    "updated": "2025-05-19T03:40:39.824253"
+    "updated": "2025-06-12T00:36:32.531923"
   },
   "tormentor": {
     "wepId": "Tormentor",
@@ -8612,10 +8614,12 @@
     "tips": {
       "sectionId": "Tips_&_Trivia",
       "content": [
-        ""
+        "",
+        "If you must shoot Botherer and its upgrades at a range it is best landed if your opponent is near a bumper or if the angle it targets the enemy tank at gives a possibility of hitting enemy tanks behind your opponent.",
+        "If the arc of this weapon passes too close to an enemy, it will lock on to them which can ruin its potential damage."
       ]
     },
-    "updated": "2025-05-19T03:40:40.372399"
+    "updated": "2025-06-12T00:35:50.991406"
   },
   "punisher": {
     "wepId": "Punisher",
@@ -8632,10 +8636,12 @@
     "tips": {
       "sectionId": "Tips_&_Trivia",
       "content": [
-        ""
+        "",
+        "If you must shoot Botherer and its upgrades at a range it is best landed if your opponent is near a bumper or if the angle it targets the enemy tank at gives a possibility of hitting enemy tanks behind your opponent.",
+        "If the arc of this weapon passes too close to an enemy, it will lock on to them which can ruin its potential damage."
       ]
     },
-    "updated": "2025-05-19T03:40:40.955387"
+    "updated": "2025-06-12T00:36:38.741501"
   },
   "oddball": {
     "wepId": "Oddball",
@@ -9083,7 +9089,7 @@
         "While the targets' turrets will be facing up, their shot alignment will be returned to their previous shot once the whole Confuser is done."
       ]
     },
-    "updated": "2025-05-19T03:40:57.662276"
+    "updated": "2025-06-11T02:33:29.670787"
   },
   "super_confuser": {
     "wepId": "Super-Confuser",

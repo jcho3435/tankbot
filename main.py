@@ -7,6 +7,7 @@ import datetime
 from src.helpers.command_preprocessing import preprocess_command
 from src.helpers.global_vars import DEFAULT_PREFIX
 from src.helpers.error_embed import build_error_embed
+from src.cogs.games_functions.guess_the_weapon import handle_guess
 
 # imports for type hinting
 import discord.ext.commands
@@ -58,12 +59,12 @@ async def on_command_error(ctx: discord.ext.commands.context.Context, error):
 
 # on message event
 @bot.event
-async def on_message(message: discord.message.Message):
+async def on_message(message: discord.Message):
     if message.author.bot: # skip bot responses
         return
     
     if message.channel.id in bot.guessTheWepGames and not message.content.startswith(DEFAULT_PREFIX): # handle guess the wep games
-        print("message received!")
+        await handle_guess(message, bot.guessTheWepGames)
         return
 
     if message.content.startswith(DEFAULT_PREFIX): # commands
@@ -80,7 +81,7 @@ async def load():
     cogFiles = [
         "misc",
         "wiki",
-        "game"
+        "games"
     ]
 
     for file in cogFiles:
