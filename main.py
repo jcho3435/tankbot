@@ -79,9 +79,9 @@ async def on_message(message: discord.Message):
 # Load cogs
 async def load():
     cogFiles = [
-        "misc",
         "wiki",
-        "games"
+        "games",
+        "misc"
     ]
 
     for file in cogFiles:

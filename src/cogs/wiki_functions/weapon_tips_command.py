@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 
 from src.helpers.global_vars import weapons, weaponData
-from src.helpers.extract_wiki_weapon_info import update_weapon_info
+from src.helpers.wiki_pull.extract_wiki_weapon_info import update_weapon_info
 from src.helpers.global_vars import WIKI_BASE_URL
 
 import datetime, asyncio

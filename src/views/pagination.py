@@ -6,7 +6,7 @@ from src.helpers.error_embed import build_error_embed
 from typing import Iterable
 
 class PaginationView(discord.ui.View):
-    def __init__(self, ctx: commands.Context, data: Iterable, per_page: int = 10, current_page: int = 0, color: discord.Color = discord.Color.from_str("#A8A8A8"), timeout: int = 60):
+    def __init__(self, ctx: commands.Context, data: Iterable, per_page: int = 10, current_page: int = 0, color: discord.Color = discord.Color.from_str("#00a6ff"), timeout: int = 60):
         super().__init__(timeout=timeout)
         self.ctx = ctx
         self.per_page = per_page

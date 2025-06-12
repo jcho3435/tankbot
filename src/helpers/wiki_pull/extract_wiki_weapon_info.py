@@ -45,11 +45,11 @@ def update_weapon_info(weapon: str) -> None:
 
     if t == maxTries:
         raise lastException
-    else:
-        lock = FileLock(WEAPONS_JSON_FILE + ".lock", timeout=10)
-        with lock:
-            with open(WEAPONS_JSON_FILE, "w+") as f:
-                json.dump(weaponData, f, indent=2)
+
+    lock = FileLock(WEAPONS_JSON_FILE + ".lock", timeout=10)
+    with lock:
+        with open(WEAPONS_JSON_FILE, "w+") as f:
+            json.dump(weaponData, f, indent=2)
 
 
 def get_weapon_info(wepId: str) -> dict:
@@ -65,6 +65,7 @@ def get_weapon_info(wepId: str) -> dict:
     urlPath = res.request.path_url
     baseWepUrl = WIKI_BASE_URL.strip("/wiki") + urlPath
     tree: html.HtmlElement = html.fromstring(res.content)
+    res.close()
 
     wepHeader: html.HtmlElement = tree.xpath(f"//span[@id='{wepId}']")[0].getparent()
     wepInfoTable: html.HtmlElement = wepHeader.getnext()

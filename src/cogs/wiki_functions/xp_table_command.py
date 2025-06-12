@@ -7,9 +7,10 @@ from discord.ext import commands
 import discord
 
 class XPPageView(PaginationView):
-    def __init__(self, ctx: commands.Context, per_page: int = 10, current_page: int = 0, color: discord.Color = discord.Color.from_str("#A8A8A8"), timeout: int = 60):
+    def __init__(self, ctx: commands.Context):
         # only keeping xp_table.keys in order to save space
-        super().__init__(ctx, list(xp_table.keys()), per_page, current_page, color, timeout)
+        super().__init__(ctx, list(xp_table.keys()))
+        del self.data # This does not need to be tracked for xp table
 
     def build_embed(self) -> discord.Embed:
         start = self.current_page * self.per_page

@@ -18,15 +18,15 @@ sys.path.insert(0, root)
 
 from lxml import html
 import requests
-from tqdm import tqdm
 import json
 
-from src.helpers.global_vars import WIKI_BASE_URL, XP_JSON_FILE
+from src.helpers.global_vars import WIKI_BASE_URL, XP_TABLE_JSON_FILE
 
 from typing import List
 
 res = requests.get(f"{WIKI_BASE_URL}/XP")
 tree: html.HtmlElement = html.fromstring(res.content)
+res.close()
 
 xpTable: html.HtmlElement = tree.xpath("//table[@class='wikitable']")[0]
 xpList: List[html.HtmlElement] = xpTable.xpath("./tbody/tr")[1:]
@@ -39,7 +39,7 @@ for row in xpList:
 
     dataDict[row_data[0].text.replace(" ", "").strip()] = {"cumulative": row_data[1].text.strip(), "next_level": row_data[2].text.strip()}
 
-with open(XP_JSON_FILE, "w+") as f:
+with open(XP_TABLE_JSON_FILE, "w+") as f:
     json.dump(dataDict, f, indent=2)
 
-print(f"Successfully wrote xp table data to {XP_JSON_FILE}")
+print(f"Successfully wrote xp table data to {XP_TABLE_JSON_FILE}")

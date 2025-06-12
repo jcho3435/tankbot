@@ -5,8 +5,9 @@ import discord
 import datetime
 
 from src.helpers.format_uptime import format_uptime
-from src.helpers.command_aliases import COMMAND_COUNT_ALIASES
+from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES
 from src.cogs.misc_functions.help_command import help_command
+from src.cogs.misc_functions.leaderboard_command import leaderboard_command
 
 class Miscellaneous(commands.Cog, name="Miscellaneous"):
     """Random miscellaneous commands."""
@@ -28,12 +29,25 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
         """Responds with the number of commands that have been run since the last time the bot went offline."""
         await ctx.send(f"**{ctx.bot.commandCount}** command(s) have been sent since the bot last went went offline.")
 
+
     # uptime
     @commands.hybrid_command()
     async def uptime(self, ctx: commands.Context):
         """Responds with the amount of time elapsed since the bot has last come online."""
         time = datetime.datetime.now() - ctx.bot.startTime
         await ctx.send(f"The bot has been online for **{format_uptime(time)}**!")
+
+
+    # leaderboard 
+    @commands.hybrid_command(
+        aliases=LEADERBOARD_ALIASES,
+        help="Displays leaderboard data for the top 200 players by XP. Leaderboard updates every 12 hours.",
+        description="Displays leaderboard data for the top 200 players by XP."
+    )
+    @app_commands.describe(page="Leaderboard page (default = 1). Accepted values: [1, 20].")
+    async def leaderboard(self, ctx: commands.Context, page: str = "1"):
+        await leaderboard_command(ctx, page)
+        
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Miscellaneous(bot))

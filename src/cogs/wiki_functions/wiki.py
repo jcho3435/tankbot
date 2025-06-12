@@ -37,7 +37,7 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
     @commands.hybrid_command(aliases=WEAPON_TREE_ALIASES)
     @app_commands.describe(weapon="Choose a weapon to get the weapon tree of.")
     async def weapon_tree(self, ctx: commands.Context, weapon: str):
-        """Fetches and displays weapon tree info """
+        """Fetches and displays weapon progression info."""
         await weapon_tree_command(ctx, weapon)
 
     # xp command

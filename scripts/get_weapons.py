@@ -22,12 +22,13 @@ from tqdm import tqdm
 import json
 
 from src.helpers.global_vars import WIKI_BASE_URL, WEAPONS_JSON_FILE
-from src.helpers.extract_wiki_weapon_info import get_weapon_info
+from src.helpers.wiki_pull.extract_wiki_weapon_info import get_weapon_info
 
 from typing import List
 
 res = requests.get(f"{WIKI_BASE_URL}/weapons")
 tree: html.HtmlElement = html.fromstring(res.content)
+res.close()
 
 wepTable: html.HtmlElement = tree.xpath("//table[@id='weapontable']")[0]
 wepList: List[html.HtmlElement] = wepTable.xpath(".//span[@style='color:white;']")
