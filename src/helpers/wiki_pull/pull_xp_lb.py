@@ -13,7 +13,7 @@ def get_xp_lb_data() -> dict:
     """Pulls xp leaderboard data from the steam leaderboards page and returns a dict, {updated: updateTime, data: [...]}"""
     data = []
 
-    for sr in range(1, 200, 10):
+    for sr in range(1, 200, 15):
         url = XP_LB_URL + f"?sr={sr}"
 
         res = requests.get(url)
@@ -22,11 +22,9 @@ def get_xp_lb_data() -> dict:
         statsDiv: html.HtmlElement = tree.xpath("//div[@id='stats']")[0]
 
         entries: List[html.HtmlElement] = statsDiv.xpath(".//div[@class='lbentry']")
-        entries10 = entries[0:10] #only want first 10 entries
-        if sr == 191: # hard coded because of how the steam lb page works
-
-            entries10 = entries[-10:]
-        for entry in entries10:
+        if sr == 196: # hard coded because of how the steam lb page works
+            entries = entries[-5:]
+        for entry in entries:
             strRank: str = entry.xpath(".//div[@class='rR']")[0].text_content().strip()
             rank = int(strRank[1:])
 
