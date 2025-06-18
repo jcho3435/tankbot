@@ -2,11 +2,13 @@ import discord
 from discord.ext import commands, fancyhelp
 
 import os, asyncio
+import aiomysql
 import datetime
 
 from src.helpers.command_preprocessing import preprocess_command
 from src.helpers.global_vars import DEFAULT_PREFIX
 from src.helpers.error_embed import build_error_embed
+from src.helpers.db_query_helpers import get_connection
 from src.cogs.games_functions.guess_the_weapon import handle_guess
 
 # imports for type hinting
@@ -18,9 +20,16 @@ class Bot(commands.Bot):
     commandCount = 0
     startTime = datetime.datetime.now()
     guessTheWepGames = {}
+    db_conn: aiomysql.Connection = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+    async def close(self):
+        print("Closing DB connection.")
+        if self.db_conn:
+            self.db_conn.close()
+        await super().close()
 
 
 intents = discord.Intents.default()
@@ -33,14 +42,16 @@ bot = Bot(command_prefix=commands.when_mentioned_or(DEFAULT_PREFIX), intents=int
 @bot.event
 async def on_ready():
     print(f"{bot.user} bot started (ID: {bot.user.id})")
-
     synced = await bot.tree.sync()
     print(f"Synced {len(synced)} slash command(s).")
+    print()
 
 # On command event
 @bot.event
-async def on_command(ctx):
+async def on_command(ctx: commands.Context):
     bot.commandCount += 1
+    async with bot.db_conn.cursor() as cur:
+        pass
 
 # On error event
 @bot.event
@@ -76,8 +87,19 @@ async def on_message(message: discord.Message):
 #endregion
 
 
-# Load cogs
-async def load():
+# Connect to DB and load cogs
+async def bot_startup():
+    # db connection
+    try:
+        bot.db_conn = await get_connection()
+    except Exception as e:
+        print("Error in connecting to DB\n" + str(e))
+        await bot.close()
+        return
+    
+    print("Successfully connected to db.")
+
+    # cogs
     cogFiles = [
         "wiki",
         "games",
@@ -87,5 +109,13 @@ async def load():
     for file in cogFiles:
         await bot.load_extension(f"src.cogs.{file}_functions.{file}")
 
-asyncio.run(load())
-bot.run(os.getenv("BOT_TOKEN"))
+    # start bot
+    try:
+        await bot.start(os.getenv("BOT_TOKEN"))
+    finally:
+        await bot.close()
+
+try:
+    asyncio.run(bot_startup())
+except KeyboardInterrupt:
+    print("Caught keyboard interrupt.")
