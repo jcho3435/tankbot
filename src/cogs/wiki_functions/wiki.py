@@ -39,14 +39,14 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
     @commands.hybrid_command(aliases=WEAPON_TREE_ALIASES)
     @app_commands.describe(weapon="Choose a weapon to get the weapon tree of.")
     async def weapon_tree(self, ctx: commands.Context, weapon: str):
-        """Fetches and displays weapon progression info."""
+        """Fetches and displays weapon progression information from the ShellShock Live Wiki."""
         await weapon_tree_command(ctx, weapon)
 
     # xp command
-    @commands.hybrid_command(name="xp", aliases=XP_ALIASES)
+    @commands.hybrid_command(aliases=XP_ALIASES)
     @app_commands.describe(level="Choose a level or star amount to get xp requirements on.")
     async def xp(self, ctx: commands.Context, level: str = None):
-        """Fetches and displays xp information from the ShellShock Live wiki."""
+        """Fetches and displays XP information from the ShellShock Live wiki."""
         await xp_table_command(ctx, level)
 
     #endregion

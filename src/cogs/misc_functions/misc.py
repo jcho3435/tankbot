@@ -5,10 +5,11 @@ import discord
 import datetime
 
 from src.helpers.format_uptime import format_uptime
-from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES, PROFILE_ALIASES
+from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES
 from src.cogs.misc_functions.help_command import help_command
 from src.cogs.misc_functions.leaderboard_command import leaderboard_command
 from src.cogs.misc_functions.profile_command import profile_command
+from src.cogs.misc_functions.search_command import search_command
 
 class Miscellaneous(commands.Cog, name="Miscellaneous"):
     """Random miscellaneous commands."""
@@ -54,7 +55,15 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     @commands.hybrid_command(aliases=PROFILE_ALIASES)
     @app_commands.describe(user="A user mention.")
     async def profile(self, ctx: commands.Context, user: discord.User = None):
+        """Displays a user's profile."""
         await profile_command(ctx, user)
+
+
+    # search
+    @commands.hybrid_command(aliases=SEARCH_ALIASES)
+    async def search(self, ctx: commands.Context, query: str):
+        """A more detailed help command. Search for commands, flags, and other bot-related features.""" # This command's output is hard coded
+        await search_command(ctx, query)
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Miscellaneous(bot))
