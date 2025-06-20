@@ -27,9 +27,10 @@ def build_profile_embed(ctx: commands.Context, user: discord.User, data: dict) -
     embed.set_footer(icon_url=ctx.author.display_avatar, text=f"Invoked by {ctx.author.display_name}")
     return embed
 
-async def profile_command(ctx: commands.Context, mention: discord.User):
+async def profile_command(ctx: commands.Context, user: discord.User):
     data = []
-    user_id = mention.id if mention else ctx.author.id
+    user = user if user else ctx.author
+    user_id = user.id
 
     try:
         data = await db_query.safe_fetch(ctx.bot, "SELECT commands, gtw_wins FROM Users WHERE id=%s", (user_id,))
@@ -38,5 +39,5 @@ async def profile_command(ctx: commands.Context, mention: discord.User):
         await ctx.send(embed=errorEmbed)
         raise e
     
-    embed = build_profile_embed(ctx, mention if mention else ctx.author, data)
+    embed = build_profile_embed(ctx, user, data)
     await ctx.send(embed=embed)

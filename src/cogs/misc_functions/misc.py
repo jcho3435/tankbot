@@ -52,8 +52,9 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     
     # profile
     @commands.hybrid_command(aliases=PROFILE_ALIASES)
-    async def profile(self, ctx: commands.Context, mention: discord.User = None):
-        await profile_command(ctx, mention)
+    @app_commands.describe(user="A user mention.")
+    async def profile(self, ctx: commands.Context, user: discord.User = None):
+        await profile_command(ctx, user)
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Miscellaneous(bot))

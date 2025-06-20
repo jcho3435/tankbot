@@ -1,3 +1,5 @@
+from rapidfuzz import process, fuzz
+
 from discord.ext import commands
 from discord import app_commands
 import discord
@@ -56,12 +58,10 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
     @weapon_tree.autocomplete("weapon")
     @xp.autocomplete("level")
     async def weapon_autocomplete(self, interaction: discord.Interaction, current: str):
-        maxLen, currLen = 10, 0
-        choices = []
         current = current.lower()
         command = interaction.command.name
         
-        # decise which list of selections to use
+        # decide which list of selections to use
         selections = None
         if command in ["weapon_info", "weapon_tips", "weapon_tree"]:
             selections = weapons
@@ -70,14 +70,17 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
         else:
             raise Exception(f"Failed to find valid command: {command}\n")
         
-        for s in selections:
-            if current in s:
-                choices.append(app_commands.Choice(name=s, value=s))
-                currLen += 1
-                if currLen >= maxLen:
-                    return choices
+        results = process.extract(
+            query=current,
+            choices=selections,
+            scorer=fuzz.partial_ratio,
+            limit=8
+        )
                 
-        return choices
+        return [
+            app_commands.Choice(name=match, value=match)
+            for match, score, _ in results
+        ]
 
     #endregion
 
