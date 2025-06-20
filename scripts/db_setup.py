@@ -22,8 +22,8 @@ async def db_setup():
 
         await cur.execute(
             """
-            CREATE TABLE Users (
-                id INT PRIMARY KEY,
+            CREATE TABLE IF NOT EXISTS Users (
+                id BIGINT PRIMARY KEY,
                 username VARCHAR(32),
                 commands INT DEFAULT 0,
                 gtw_wins INT DEFAULT 0
@@ -36,3 +36,17 @@ async def db_setup():
     conn.close()
 
 asyncio.run(db_setup())
+
+
+
+
+
+
+# DB SCHEMA
+
+# Users
+# ---------
+# id
+# username
+# commands
+# gtw_wins

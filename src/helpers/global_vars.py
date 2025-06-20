@@ -3,6 +3,8 @@ import json
 DEFAULT_PREFIX = ">>"
 WIKI_BASE_URL = "https://shellshocklive.fandom.com/wiki"
 
+DEFAULT_EMBED_COLOR = "#00A6FF"
+
 
 def load_json_file(filename):
     with open(filename, "r") as f:

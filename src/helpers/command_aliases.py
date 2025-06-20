@@ -1,6 +1,7 @@
 # MISC
 COMMAND_COUNT_ALIASES = ["command-count", "commandcount"]
 LEADERBOARD_ALIASES = ["leaderboards", "lb"]
+PROFILE_ALIASES = ["pf"]
 
 # WIKI
 WEAPON_INFO_ALIASES = ["wi", "weaponinfo", "weapon-info", "wepinfo", "wep-info"]

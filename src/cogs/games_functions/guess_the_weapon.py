@@ -4,6 +4,8 @@ import discord
 from discord.ext import commands
 
 from src.helpers.global_vars import weapons, weaponData
+from src.helpers import db_query_helpers as db_query
+from src.helpers.bot import Bot
 
 timeout = datetime.timedelta(minutes=2)
 maxRoundTime = datetime.timedelta(minutes=5)
@@ -88,11 +90,14 @@ async def guess_the_weapon_start(ctx: commands.Context, rounds: str):
     
 
 
-async def handle_correct_guess(message: discord.Message, guessTheWepGames: dict):
-    """This function should not be called directly outside of this file"""
+async def handle_correct_guess(message: discord.Message, bot: Bot):
+    """This function should not be called anywhere outside of this file"""
+    guessTheWepGames = bot.guessTheWepGames
+
     gameInfo = guessTheWepGames[message.channel.id]
     await message.channel.send(f"{message.author.display_name} guessed correctly! The weapon was `{weaponData[gameInfo["weapon"]]["wepId"].replace("_", " ")}`")
     
+    await db_query.safe_user_update(bot, message.author, "UPDATE Users SET gtw_wins=gtw_wins+1 WHERE id=%s", (message.author.id,))
 
     if gameInfo["current_round"] == gameInfo["rounds"]:
         guessTheWepGames.pop(message.channel.id)
@@ -119,8 +124,9 @@ async def handle_correct_guess(message: discord.Message, guessTheWepGames: dict)
     await message.channel.send(embed=build_game_embed(gameInfo))
 
 # assume this is only called if a game is active in the channel
-async def handle_guess(message: discord.Message, guessTheWepGames: dict):
-    channelId, guess = message.channel.id, message.content
+async def handle_guess(message: discord.Message, bot: Bot):
+    channelId, guess = message.channel.id, message.content.lower()
+    guessTheWepGames = bot.guessTheWepGames
 
     clean_games(channelId, guessTheWepGames)
     if channelId not in guessTheWepGames:
@@ -139,7 +145,7 @@ async def handle_guess(message: discord.Message, guessTheWepGames: dict):
     guess = guess.strip().replace(" ", "").replace("-", "").replace("_", "")
 
     if wep == guess: # correct guess
-        await handle_correct_guess(message, guessTheWepGames)
+        await handle_correct_guess(message, bot)
     else: # incorrect guess
         await message.add_reaction("\u274C") # this is the :x: emoji
         if datetime.datetime.now() - gameInfo["last_hint_time"] > timeBetweenHints:

@@ -5,9 +5,10 @@ import discord
 import datetime
 
 from src.helpers.format_uptime import format_uptime
-from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES
+from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES, PROFILE_ALIASES
 from src.cogs.misc_functions.help_command import help_command
 from src.cogs.misc_functions.leaderboard_command import leaderboard_command
+from src.cogs.misc_functions.profile_command import profile_command
 
 class Miscellaneous(commands.Cog, name="Miscellaneous"):
     """Random miscellaneous commands."""
@@ -47,7 +48,12 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     @app_commands.describe(page="Leaderboard page (default = 1). Accepted values: [1, 20].")
     async def leaderboard(self, ctx: commands.Context, page: str = "1"):
         await leaderboard_command(ctx, page)
-        
+
+    
+    # profile
+    @commands.hybrid_command(aliases=PROFILE_ALIASES)
+    async def profile(self, ctx: commands.Context, mention: discord.User = None):
+        await profile_command(ctx, mention)
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Miscellaneous(bot))

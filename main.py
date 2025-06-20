@@ -2,39 +2,20 @@ import discord
 from discord.ext import commands, fancyhelp
 
 import os, asyncio
-import aiomysql
-import datetime
 
+from src.helpers.bot import Bot
 from src.helpers.command_preprocessing import preprocess_command
 from src.helpers.global_vars import DEFAULT_PREFIX
 from src.helpers.error_embed import build_error_embed
-from src.helpers.db_query_helpers import get_connection
+from src.helpers import db_query_helpers as db_query
 from src.cogs.games_functions.guess_the_weapon import handle_guess
 
 # imports for type hinting
 import discord.ext.commands
 
 
-class Bot(commands.Bot):
-    # static globals
-    commandCount = 0
-    startTime = datetime.datetime.now()
-    guessTheWepGames = {}
-    db_conn: aiomysql.Connection = None
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    async def close(self):
-        print("Closing DB connection.")
-        if self.db_conn:
-            self.db_conn.close()
-        await super().close()
-
-
 intents = discord.Intents.default()
 intents.message_content = True
-
 bot = Bot(command_prefix=commands.when_mentioned_or(DEFAULT_PREFIX), intents=intents, help_command=fancyhelp.EmbeddedHelpCommand())
 
 #region event handlers
@@ -50,8 +31,7 @@ async def on_ready():
 @bot.event
 async def on_command(ctx: commands.Context):
     bot.commandCount += 1
-    async with bot.db_conn.cursor() as cur:
-        pass
+    await db_query.safe_user_update(bot, ctx.author, "UPDATE Users SET commands=commands+1 WHERE id=%s;", (ctx.author.id,))
 
 # On error event
 @bot.event
@@ -63,8 +43,12 @@ async def on_command_error(ctx: discord.ext.commands.context.Context, error):
         errorMessage = error.args[-1]
     elif isinstance(error, commands.CommandNotFound):
         errorMessage = f"Command not recognized: Use `/help` or `{DEFAULT_PREFIX}help` to see a list of commands."
+    elif isinstance(error, commands.UserNotFound):
+        errorMessage = f"Command argument must be a user mention."
     else:
-        raise error
+        import traceback
+        traceback.print_exception(type(error), error, error.__traceback__)
+        return
     
     await ctx.send(embed=build_error_embed(errorMessage, ctx.author))
 
@@ -75,7 +59,7 @@ async def on_message(message: discord.Message):
         return
     
     if message.channel.id in bot.guessTheWepGames and not message.content.startswith(DEFAULT_PREFIX): # handle guess the wep games
-        await handle_guess(message, bot.guessTheWepGames)
+        await handle_guess(message, bot)
         return
 
     if message.content.startswith(DEFAULT_PREFIX): # commands
@@ -91,7 +75,7 @@ async def on_message(message: discord.Message):
 async def bot_startup():
     # db connection
     try:
-        bot.db_conn = await get_connection()
+        bot.db_pool = await db_query.create_pool()
     except Exception as e:
         print("Error in connecting to DB\n" + str(e))
         await bot.close()
