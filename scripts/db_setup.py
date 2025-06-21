@@ -12,28 +12,38 @@ sys.path.insert(0, root)
 import asyncio, os
 import aiomysql
 
-from src.helpers.db_query_helpers import get_connection
+from src.helpers.global_vars import DEFAULT_EMBED_COLOR
+
 
 async def db_setup():
-    conn = await get_connection()
+    conn = await aiomysql.connect(
+        host=os.getenv("DB_HOST"),
+        port=3306,
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        db=os.getenv("DB_NAME"),
+        cursorclass=aiomysql.DictCursor,
+    )
 
     async with conn.cursor() as cur:
         cur: aiomysql.Cursor
 
         await cur.execute(
-            """
+            f"""
             CREATE TABLE IF NOT EXISTS Users (
                 id BIGINT PRIMARY KEY,
                 username VARCHAR(32),
                 commands INT DEFAULT 0,
-                gtw_wins INT DEFAULT 0
+                gtw_wins INT DEFAULT 0,
+                profile_color CHAR(7) DEFAULT '{DEFAULT_EMBED_COLOR}',
+                xp INT DEFAULT NULL
             );
             """
         )
         await conn.commit()
         print("Successfully created the Users table.")
 
-    conn.close()
+    await conn.ensure_closed()
 
 asyncio.run(db_setup())
 
@@ -50,3 +60,5 @@ asyncio.run(db_setup())
 # username
 # commands
 # gtw_wins
+# profile_color
+# xp

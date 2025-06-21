@@ -2,11 +2,9 @@ from discord import app_commands
 from discord.ext import commands
 import discord
 
-import datetime
-
-from src.helpers.format_uptime import format_uptime
 from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES
 from src.cogs.misc_functions.help_command import help_command
+from src.cogs.misc_functions.uptime_command import uptime_command
 from src.cogs.misc_functions.leaderboard_command import leaderboard_command
 from src.cogs.misc_functions.profile_command import profile_command
 from src.cogs.misc_functions.search_command import search_command
@@ -28,16 +26,15 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     # command count
     @commands.hybrid_command(aliases=COMMAND_COUNT_ALIASES)
     async def command_count(self, ctx: commands.Context):
-        """Responds with the number of commands that have been run since the last time the bot went offline."""
+        """Responds with the number of commands that have been run globally since the last time the bot went offline."""
         await ctx.send(f"**{ctx.bot.commandCount}** command(s) have been sent since the bot last went went offline.")
 
 
     # uptime
     @commands.hybrid_command()
     async def uptime(self, ctx: commands.Context):
-        """Responds with the amount of time elapsed since the bot has last come online."""
-        time = datetime.datetime.now() - ctx.bot.startTime
-        await ctx.send(f"The bot has been online for **{format_uptime(time)}**!")
+        """Responds with the amount of time that has elapsed since the bot has last come online."""
+        await uptime_command(ctx)
 
 
     # leaderboard 
@@ -58,11 +55,18 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
         """Displays a user's profile."""
         await profile_command(ctx, user)
 
+    
+    # set profile
+    @commands.hybrid_command()
+    async def set_profile(self, ctx: commands.Context, field: str, value: str):
+        """Set profile data for certain fields."""
+        await ctx.send("Commands under construction.")
+
 
     # search
     @commands.hybrid_command(aliases=SEARCH_ALIASES)
     async def search(self, ctx: commands.Context, query: str):
-        """A more detailed help command. Search for commands, flags, and other bot-related features.""" # This command's output is hard coded
+        """A more detailed help command. Search for commands and other bot-related features.""" # This command's output is hard coded
         await search_command(ctx, query)
 
 async def setup(bot: commands.Bot):

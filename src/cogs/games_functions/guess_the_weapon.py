@@ -43,7 +43,7 @@ def initialize_game(ctx: commands.Context, rounds: int) -> dict:
     }
 
 def build_game_embed(gameInfo: dict):
-    embed = discord.Embed(title="Guess The Weapon!", timestamp=datetime.datetime.now(), description=f"-# A new hint is revealed after wrong guesses made {timeBetweenHints.total_seconds()}+ seconds after the previous hint.")
+    embed = discord.Embed(title="Guess The Weapon!", timestamp=datetime.datetime.now(), description=f"-# A new hint is revealed after incorrect guesses made {timeBetweenHints.total_seconds()}+ seconds after the previous hint.")
     embed.set_author(name=f"Started by {gameInfo["author_name"]}", icon_url=gameInfo["author_avatar"])
     
     embed.add_field(name="", value="", inline=False)

@@ -8,22 +8,25 @@ import discord
 from discord.ext import commands
 
 def build_profile_embed(ctx: commands.Context, user: discord.User, data: dict) -> discord.Embed:
-    embed = discord.Embed(title="\u00AC Profile", timestamp=datetime.datetime.now(), color=discord.Color.from_str(DEFAULT_EMBED_COLOR))
+    embed = discord.Embed(title="\u00AC Profile", timestamp=datetime.datetime.now())
     if not data:
-        embed.add_field(name="", value="`There is no data for this user!`")
+        embed.color = discord.Color.from_str("#FFFF00")
+        embed.add_field(name="", value=f"There is no data for <@{user.id}>")
         return embed
     
     embed.set_thumbnail(url=user.display_avatar)
 
     data = data[0]
+    embed.color = discord.Color.from_str(f"{data["profile_color"]}")
 
     profileStr = f"\u2794 Username: **{user.name}**\n\n"
     profileStr += f"\u2794 Display name: **{user.display_name}**\n\n"
     profileStr += f"\u2794 Lifetime commands used: **{data["commands"]}**\n\n"
     profileStr += f"\u2794 Guess the Weapon wins: **{data["gtw_wins"]}**\n\n"
+    profileStr += f"\u2794 ShellShock Live XP: **{data["xp"] if data["xp"] else "--"}**"
 
     embed.add_field(name="", value=profileStr)
-    embed.add_field(name="", value="")
+    embed.add_field(name="", value="", inline=False)
     embed.set_footer(icon_url=ctx.author.display_avatar, text=f"Invoked by {ctx.author.display_name}")
     return embed
 
@@ -33,7 +36,7 @@ async def profile_command(ctx: commands.Context, user: discord.User):
     user_id = user.id
 
     try:
-        data = await db_query.safe_fetch(ctx.bot, "SELECT commands, gtw_wins FROM Users WHERE id=%s", (user_id,))
+        data = await db_query.safe_fetch(ctx.bot, "SELECT commands, gtw_wins, profile_color, xp FROM Users WHERE id=%s", (user_id,))
     except Exception as e:
         errorEmbed = build_error_embed("An unexpected error occurred!", ctx.author)
         await ctx.send(embed=errorEmbed)
