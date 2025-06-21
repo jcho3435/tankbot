@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import discord
 from discord.ext import commands, fancyhelp
 
@@ -5,7 +8,7 @@ import os, asyncio
 
 from src.helpers.bot import Bot
 from src.helpers.command_preprocessing import preprocess_command
-from src.helpers.global_vars import DEFAULT_PREFIX
+from src.helpers.global_vars import DEFAULT_PREFIX, TEST_GUILD
 from src.helpers.error_embed import build_error_embed
 from src.helpers import db_query_helpers as db_query
 from src.cogs.games_functions.guess_the_weapon import handle_guess
@@ -22,8 +25,16 @@ bot = Bot(command_prefix=commands.when_mentioned_or(DEFAULT_PREFIX), intents=int
 # On ready event
 @bot.event
 async def on_ready():
+    # try:
+    #     bot.tree.clear_commands(guild=None)
+    #     print("Cleared commands")
+    # except Exception as e:
+    #     print(e)
     print(f"{bot.user} bot started (ID: {bot.user.id})")
-    synced = await bot.tree.sync()
+    try:
+        synced = await bot.tree.sync()
+    except Exception as e:
+        print("Error while syncing:", str(e))
     print(f"Synced {len(synced)} slash command(s).")
     print()
 

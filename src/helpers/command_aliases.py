@@ -2,6 +2,7 @@
 COMMAND_COUNT_ALIASES = ["command-count", "commandcount"]
 LEADERBOARD_ALIASES = ["leaderboards", "lb"]
 PROFILE_ALIASES = ["userinfo", "user-info", "me", "user-lookup", "userlookup"]
+SET_PROFILE_ALIASES = ["set-profile", "setprofile", "profile-set", "profileset", "set", "sp"]
 SEARCH_ALIASES = ["info", "lookup", "s"]
 
 # WIKI

@@ -1,4 +1,7 @@
-import json
+import json, os
+import discord
+
+TEST_GUILD = discord.Object(id=os.getenv("TEST_GUILD"))
 
 DEFAULT_PREFIX = ">>"
 WIKI_BASE_URL = "https://shellshocklive.fandom.com/wiki"

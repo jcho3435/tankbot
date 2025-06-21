@@ -1,16 +1,22 @@
+from rapidfuzz import fuzz, process
+
 from discord import app_commands
 from discord.ext import commands
 import discord
 
-from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES
+from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES, SET_PROFILE_ALIASES
+from src.helpers.global_vars import TEST_GUILD
 from src.cogs.misc_functions.help_command import help_command
 from src.cogs.misc_functions.uptime_command import uptime_command
 from src.cogs.misc_functions.leaderboard_command import leaderboard_command
 from src.cogs.misc_functions.profile_command import profile_command
-from src.cogs.misc_functions.search_command import search_command
+from src.cogs.misc_functions.set_profile_command import set_profile_command
+from src.cogs.misc_functions.search_command import search_command, SEARCH_OUTPUT_DICT
 
 class Miscellaneous(commands.Cog, name="Miscellaneous"):
     """Random miscellaneous commands."""
+
+    searchSelections = list(SEARCH_OUTPUT_DICT.keys())
 
     def __init__(self, bot):
         self.bot = bot
@@ -26,7 +32,7 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     # command count
     @commands.hybrid_command(aliases=COMMAND_COUNT_ALIASES)
     async def command_count(self, ctx: commands.Context):
-        """Responds with the number of commands that have been run globally since the last time the bot went offline."""
+        """Responds with the number of commands that have been run since the last time the bot went offline."""
         await ctx.send(f"**{ctx.bot.commandCount}** command(s) have been sent since the bot last went went offline.")
 
 
@@ -57,17 +63,51 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
 
     
     # set profile
-    @commands.hybrid_command()
+    @commands.hybrid_command(aliases=SET_PROFILE_ALIASES)
+    @app_commands.describe(field="The field that you would like to set. Valid fields: `color` `xp`")
+    @app_commands.describe(value="The value to set for for the provided field. Value constraints depend on the field being set.")
     async def set_profile(self, ctx: commands.Context, field: str, value: str):
-        """Set profile data for certain fields."""
-        await ctx.send("Commands under construction.")
+        """Set profile data for certain fields. Use /search set_profile for detailed information."""
+        await set_profile_command(ctx, field, value)
 
 
     # search
     @commands.hybrid_command(aliases=SEARCH_ALIASES)
+    @app_commands.describe(query="The command or feature to get more information about.")
     async def search(self, ctx: commands.Context, query: str):
         """A more detailed help command. Search for commands and other bot-related features.""" # This command's output is hard coded
         await search_command(ctx, query)
+
+
+    #region autocompletes
+    @search.autocomplete("query")
+    async def misc_autocomplete(self, interaction: discord.Interaction, current: str):
+        current = current.lower()
+        command = interaction.command.name
+        
+        # decide which list of selections to use
+        selections = None
+        if command == "search":
+            selections = self.searchSelections
+        else:
+            print(f"Failed to find valid command: {command}\n")
+            raise Exception(f"Failed to find valid command: {command}\n")
+        
+        results = process.extract(
+            query=current,
+            choices=selections,
+            scorer=fuzz.partial_ratio,
+            limit=8,
+            score_cutoff=100
+        ) if current else [(el, 0, 0) for el in selections[:8]]
+        
+        return [
+            app_commands.Choice(name=match, value=match)
+            for match, score, _ in results
+        ]
+
+
+    #endregion
 
 async def setup(bot: commands.Bot):
     await bot.add_cog(Miscellaneous(bot))

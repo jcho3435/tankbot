@@ -57,7 +57,7 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
     @weapon_tips.autocomplete("weapon")
     @weapon_tree.autocomplete("weapon")
     @xp.autocomplete("level")
-    async def weapon_autocomplete(self, interaction: discord.Interaction, current: str):
+    async def wiki_autocomplete(self, interaction: discord.Interaction, current: str):
         current = current.lower()
         command = interaction.command.name
         
@@ -74,12 +74,13 @@ class QuickWiki(commands.Cog, name="Quick Wiki"):
             query=current,
             choices=selections,
             scorer=fuzz.partial_ratio,
-            limit=8
-        )
+            limit=8,
+            score_cutoff=100
+        ) if current else [(el, 0, 0) for el in selections[:8]]
                 
         return [
             app_commands.Choice(name=match, value=match)
-            for match, score, _ in results
+            for match, _, _ in results
         ]
 
     #endregion
