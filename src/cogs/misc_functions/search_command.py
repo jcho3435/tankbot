@@ -72,6 +72,16 @@ SEARCH_OUTPUT_DICT = {
         "syntax": f"{DEFAULT_PREFIX}profile [user]",
         "[user]": "A user mention, e.g. `@Tank Game#0362`."
     },
+    "set_profile": {
+        "desc": "Allows users to set their own profile data for certain fields.",
+        "syntax": f"{DEFAULT_PREFIX}set_profile <field> <value>",
+        "<field>": "The field to be set. Possible fields:\n" +
+                   "**\u2022** `color`: the user's embed color on the profile command\n" +
+                   "**\u2022** `xp`: the user's ShellShock Live XP",
+        "[value]": "The value to set for the provided field. Value constrains are dependent upon the field. For all fields, value can be left empty to reset the field to its default value.\n" +
+                   "**\u2022** `color`: A valid hex code for a color, preceded by the `#` symbol\n" +
+                   "**\u2022** `xp`: A positive integer value."
+    },
     "search": {
         "desc": f"A more detailed help command. Search for commands and other bot-related features. Use `{DEFAULT_PREFIX}search options` for a full list of all search options.",
         "syntax": f"{DEFAULT_PREFIX}search <query>",

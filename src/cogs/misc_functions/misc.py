@@ -66,7 +66,7 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     @commands.hybrid_command(aliases=SET_PROFILE_ALIASES)
     @app_commands.describe(field="The field that you would like to set.")
     @app_commands.describe(value="The value to set for for the provided field. Value constraints depend on the field being set.")
-    async def set_profile(self, ctx: commands.Context, field: FieldOptions, value: str):
+    async def set_profile(self, ctx: commands.Context, field: FieldOptions, value: str = None):
         """Set profile data for certain fields. Use /search set_profile for detailed information."""
         await set_profile_command(ctx, field, value)
 
