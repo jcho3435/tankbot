@@ -10,7 +10,7 @@ from src.cogs.misc_functions.help_command import help_command
 from src.cogs.misc_functions.uptime_command import uptime_command
 from src.cogs.misc_functions.leaderboard_command import leaderboard_command
 from src.cogs.misc_functions.profile_command import profile_command
-from src.cogs.misc_functions.set_profile_command import set_profile_command
+from src.cogs.misc_functions.set_profile_command import set_profile_command, FieldOptions
 from src.cogs.misc_functions.search_command import search_command, SEARCH_OUTPUT_DICT
 
 class Miscellaneous(commands.Cog, name="Miscellaneous"):
@@ -64,9 +64,9 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     
     # set profile
     @commands.hybrid_command(aliases=SET_PROFILE_ALIASES)
-    @app_commands.describe(field="The field that you would like to set. Valid fields: `color` `xp`")
+    @app_commands.describe(field="The field that you would like to set.")
     @app_commands.describe(value="The value to set for for the provided field. Value constraints depend on the field being set.")
-    async def set_profile(self, ctx: commands.Context, field: str, value: str):
+    async def set_profile(self, ctx: commands.Context, field: FieldOptions, value: str):
         """Set profile data for certain fields. Use /search set_profile for detailed information."""
         await set_profile_command(ctx, field, value)
 
@@ -81,17 +81,10 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
 
     #region autocompletes
     @search.autocomplete("query")
-    async def misc_autocomplete(self, interaction: discord.Interaction, current: str):
+    async def search_autocomplete(self, interaction: discord.Interaction, current: str):
         current = current.lower()
-        command = interaction.command.name
         
-        # decide which list of selections to use
-        selections = None
-        if command == "search":
-            selections = self.searchSelections
-        else:
-            print(f"Failed to find valid command: {command}\n")
-            raise Exception(f"Failed to find valid command: {command}\n")
+        selections = self.searchSelections
         
         results = process.extract(
             query=current,
@@ -103,9 +96,15 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
         
         return [
             app_commands.Choice(name=match, value=match)
-            for match, score, _ in results
+            for match, _, _ in results
         ]
 
+    #endregion
+
+    #region error handlers
+    @set_profile.error
+    async def set_profile_error(self, ctx: commands.Context, error: commands.CommandError):
+        return
 
     #endregion
 

@@ -34,7 +34,7 @@ async def on_ready():
     try:
         synced = await bot.tree.sync()
     except Exception as e:
-        print("Error while syncing:", str(e))
+        print("Error while syncing commands:", str(e))
     print(f"Synced {len(synced)} slash command(s).")
     print()
 
@@ -52,6 +52,8 @@ async def on_command_error(ctx: discord.ext.commands.context.Context, error):
         errorMessage = f"Missing argument: `{error.param.name}`. Please check the command usage using `>>help {ctx.command}`."
     elif isinstance(error, commands.BadArgument) and error.args[-1].startswith("Invalid argument"):
         errorMessage = error.args[-1]
+    elif isinstance(error, commands.BadArgument):
+        errorMessage = f"Invalid argument. Please use the slash command `/{ctx.command}` to see the available argument options."
     elif isinstance(error, commands.CommandNotFound):
         errorMessage = f"Command not recognized: Use `/help` or `{DEFAULT_PREFIX}help` to see a list of commands."
     elif isinstance(error, commands.UserNotFound):

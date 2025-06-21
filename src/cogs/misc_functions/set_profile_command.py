@@ -1,5 +1,7 @@
 import datetime
 
+from enum import Enum
+
 from src.helpers import db_query_helpers as db_query
 from src.helpers.global_vars import DEFAULT_EMBED_COLOR
 from src.helpers.error_embed import build_error_embed
@@ -7,7 +9,14 @@ from src.helpers.error_embed import build_error_embed
 import discord
 from discord.ext import commands
 
-async def set_profile_command(ctx: commands.Context, field: str, value: str):
+#region enum
+class FieldOptions(Enum):
+    color="color"
+    xp="xp"
+
+#endregion
+
+async def set_profile_command(ctx: commands.Context, field: FieldOptions, value: str):
     await ctx.send("Command under construction")
 
     # try:
