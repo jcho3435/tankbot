@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-import datetime
+from datetime import datetime, timezone
 
 from src.helpers.global_vars import weapons, weaponData, WIKI_BASE_URL, DEFAULT_PREFIX
 # from src.helpers.custom_emojis import WEAPON_ICONS
@@ -13,7 +13,7 @@ def construct_wep_tree_embed(wepList: list) -> discord.Embed:
     """
     firstWepData = weaponData[wepList[0]]
 
-    embed = discord.Embed(title=f"{firstWepData["wepId"].replace("_", " ")} Weapon Progression", url=firstWepData["baseWikiUrl"], color=discord.Color.from_str(firstWepData["color"]), timestamp=datetime.datetime.now())
+    embed = discord.Embed(title=f"{firstWepData["wepId"].replace("_", " ")} Weapon Progression", url=firstWepData["baseWikiUrl"], color=discord.Color.from_str(firstWepData["color"]), timestamp=datetime.now(timezone.utc))
     embed.set_thumbnail(url=firstWepData["imgUrl"]) # remove thumbnail once custom emojis for all weps are added
     embed.add_field(name="", value="", inline=False)
 

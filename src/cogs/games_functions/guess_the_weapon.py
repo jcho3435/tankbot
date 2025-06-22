@@ -1,4 +1,5 @@
-import datetime, random
+import random
+from datetime import datetime, timezone, timedelta
 
 import discord
 from discord.ext import commands
@@ -7,17 +8,17 @@ from src.helpers.global_vars import weapons, weaponData
 from src.helpers import db_query_helpers as db_query
 from src.helpers.bot import Bot
 
-timeout = datetime.timedelta(minutes=2)
-maxRoundTime = datetime.timedelta(minutes=5)
-timeBetweenHints = datetime.timedelta(seconds=7.5)
-timeUntilColor = datetime.timedelta(seconds=30)
+timeout = timedelta(minutes=2)
+maxRoundTime = timedelta(minutes=5)
+timeBetweenHints = timedelta(seconds=7.5)
+timeUntilColor = timedelta(seconds=30)
 
 #region Helper functions
 def clean_games(channelId: str, guessTheWepGames: dict,):
     if channelId in guessTheWepGames:
         gameInfo = guessTheWepGames[channelId]
         lastInteraction = gameInfo["last_interaction"]
-        if datetime.datetime.now() - lastInteraction > timeout:
+        if datetime.now() - lastInteraction > timeout:
             guessTheWepGames.pop(channelId)
 
 def initialize_game(ctx: commands.Context, rounds: int) -> dict:
@@ -37,13 +38,13 @@ def initialize_game(ctx: commands.Context, rounds: int) -> dict:
         "seen_weapons": [],
         "hints": [hint],
         "hint_options": hintOptions,
-        "last_interaction": datetime.datetime.now(), 
-        "last_hint_time":datetime.datetime.now(),
-        "round_start_time": datetime.datetime.now()
+        "last_interaction": datetime.now(), 
+        "last_hint_time":datetime.now(),
+        "round_start_time": datetime.now()
     }
 
 def build_game_embed(gameInfo: dict):
-    embed = discord.Embed(title="Guess The Weapon!", timestamp=datetime.datetime.now(), description=f"-# A new hint is revealed after incorrect guesses made {timeBetweenHints.total_seconds()}+ seconds after the previous hint.")
+    embed = discord.Embed(title="Guess The Weapon!", timestamp=datetime.now(timezone.utc), description=f"-# A new hint is revealed after incorrect guesses made {timeBetweenHints.total_seconds()}+ seconds after the previous hint.")
     embed.set_author(name=f"Started by {gameInfo["author_name"]}", icon_url=gameInfo["author_avatar"])
     
     embed.add_field(name="", value="", inline=False)
@@ -61,7 +62,7 @@ def build_game_embed(gameInfo: dict):
 
     embed.add_field(name="", value="", inline=False)
 
-    if datetime.datetime.now() - gameInfo["round_start_time"] > timeUntilColor:
+    if datetime.now() - gameInfo["round_start_time"] > timeUntilColor:
         embed.color = discord.Color.from_str(weaponInfo["color"])
     
     embed.set_footer(text=f"Round {gameInfo["current_round"]}/{gameInfo["rounds"]}")
@@ -111,7 +112,7 @@ async def handle_correct_guess(message: discord.Message, bot: Bot):
         newWep = random.choice(weapons)
     gameInfo["weapon"] = newWep
 
-    gameInfo["round_start_time"] = gameInfo["last_hint_time"] = datetime.datetime.now()
+    gameInfo["round_start_time"] = gameInfo["last_hint_time"] = datetime.now()
     
     wepInfo = weaponData[newWep]
     hintOptions = ["desc"] + [cat for cat in wepInfo["stats"]]
@@ -133,12 +134,12 @@ async def handle_guess(message: discord.Message, bot: Bot):
         return
 
     gameInfo = guessTheWepGames[channelId]
-    if datetime.datetime.now() - gameInfo["round_start_time"] > maxRoundTime:
+    if datetime.now() - gameInfo["round_start_time"] > maxRoundTime:
         await message.channel.send("Max round time for `Guess the Weapon` has elapsed. Game has been forcibly quit.")
         guessTheWepGames.pop(channelId)
         return
 
-    gameInfo["last_interaction"] = datetime.datetime.now()
+    gameInfo["last_interaction"] = datetime.now()
 
     # Check for correct guess
     wep: str = gameInfo["weapon"].replace("-", "").replace("_", "")
@@ -148,15 +149,15 @@ async def handle_guess(message: discord.Message, bot: Bot):
         await handle_correct_guess(message, bot)
     else: # incorrect guess
         await message.add_reaction("\u274C") # this is the :x: emoji
-        if datetime.datetime.now() - gameInfo["last_hint_time"] > timeBetweenHints:
+        if datetime.now() - gameInfo["last_hint_time"] > timeBetweenHints:
             hint = random.choice(gameInfo["hint_options"])
             gameInfo["hint_options"].remove(hint)
             gameInfo["hints"].append(hint)
-            gameInfo["last_hint_time"] = datetime.datetime.now()
+            gameInfo["last_hint_time"] = datetime.now()
 
             msg = "**A new hint is now available!**"
             if not gameInfo["hint_options"]: # no more hint options
-                gameInfo["last_hint_time"] = datetime.datetime.now() + maxRoundTime
+                gameInfo["last_hint_time"] = datetime.now() + maxRoundTime
                 msg += "\n-# This is the final hint!"
             
             await message.channel.send(msg, embed=build_game_embed(gameInfo))

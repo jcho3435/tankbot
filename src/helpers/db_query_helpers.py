@@ -1,4 +1,5 @@
-import os, datetime
+import os
+from datetime import datetime
 import discord
 import aiomysql
 from aiomysql import OperationalError, InterfaceError

@@ -4,7 +4,7 @@ Function to pull all necessary weapon data from the wiki
 
 import requests, re, json
 from filelock import FileLock
-import datetime
+from datetime import datetime
 from lxml import html
 
 from src.helpers.global_vars import WIKI_BASE_URL, WEAPONS_JSON_FILE
@@ -133,6 +133,6 @@ def get_weapon_info(wepId: str) -> dict:
         "tips": tipsDict
     }
     retVal.update({k.lower(): v for k, v in ext_stats.items()})
-    retVal.update({"updated": datetime.datetime.now().isoformat()})
+    retVal.update({"updated": datetime.now().isoformat()})
 
     return retVal

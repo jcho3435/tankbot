@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import aiomysql
 
 from discord.ext import commands
@@ -6,7 +6,7 @@ from discord.ext import commands
 class Bot(commands.Bot):
     # static globals
     commandCount = 0
-    startTime = datetime.datetime.now()
+    startTime = datetime.now()
     guessTheWepGames = {}
     db_pool: aiomysql.Pool = None
 

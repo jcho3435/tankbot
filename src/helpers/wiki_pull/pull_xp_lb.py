@@ -3,14 +3,15 @@ from src.helpers.global_vars import XP_LEADERBOARD_JSON_FILE, xp_leaderboard
 from filelock import FileLock
 from lxml import html
 import requests
-import json, datetime
+import json
+from datetime import datetime
 
 from typing import List
 
 XP_LB_URL = "https://steamcommunity.com/stats/326460/leaderboards/743177"
 
 def get_xp_lb_data() -> dict:
-    """Pulls xp leaderboard data from the steam leaderboards page and returns a dict, {updated: updateTime, data: [...]}"""
+    """Pulls xp leaderboard data from the steam leaderboards page and returns a dict, {updated: updatetime, data: [...]}"""
     data = []
 
     for sr in range(1, 200, 15):
@@ -35,7 +36,7 @@ def get_xp_lb_data() -> dict:
 
     data.sort(key=lambda el: el["rank"]) # redundant sort on rank
 
-    return {"updated": datetime.datetime.now().isoformat(), "data": data}
+    return {"updated": datetime.now().isoformat(), "data": data}
 
 
 def update_xp_lb_var():

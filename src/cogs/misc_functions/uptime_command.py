@@ -1,8 +1,8 @@
-import datetime
+from datetime import datetime, timedelta
 
 from discord.ext import commands
 
-def format_uptime(delta: datetime.timedelta) -> str:
+def format_uptime(delta: timedelta) -> str:
     days = delta.days
     hours, remainder = divmod(delta.seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
@@ -19,5 +19,5 @@ def format_uptime(delta: datetime.timedelta) -> str:
     return " ".join(parts)
 
 async def uptime_command(ctx: commands.Context):
-    time = datetime.datetime.now() - ctx.bot.startTime
+    time = datetime.now() - ctx.bot.startTime
     await ctx.send(f"The bot has been online for **{format_uptime(time)}**!")

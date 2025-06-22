@@ -4,7 +4,8 @@ from discord.ext import commands
 from src.helpers.global_vars import WIKI_BASE_URL, DEFAULT_PREFIX, weapons, weaponData
 from src.helpers.wiki_pull.extract_wiki_weapon_info import update_weapon_info
 
-import datetime, asyncio
+from datetime import datetime, timezone
+import asyncio
 
 # imports for type hinting
 from typing import List
@@ -19,7 +20,7 @@ def construct_weapon_tips_embed(weapon: str) -> discord.Embed:
     color = discord.Color.from_str(wepData["color"])
     imageUrl = wepData["imgUrl"]
 
-    embed = discord.Embed(title=f"{wepId.replace("_", " ")} Tips and Trivia", timestamp=datetime.datetime.now(), color=color)
+    embed = discord.Embed(title=f"{wepId.replace("_", " ")} Tips and Trivia", timestamp=datetime.now(timezone.utc), color=color)
     embed.set_thumbnail(url=imageUrl)
     embed.set_footer(text="Incorrect or missing information? Help improve the ShellShock Live Wiki!")
 
@@ -44,8 +45,8 @@ async def weapon_tips_command(ctx: commands.Context, weapon: str):
     wepData: dict = weaponData[weapon]
 
     #update weapon if necessary
-    updated = datetime.datetime.fromisoformat(wepData["updated"])
-    delta = datetime.datetime.now() - updated
+    updated = datetime.fromisoformat(wepData["updated"])
+    delta = datetime.now() - updated
     if delta.days >= 10:
         try:
             await asyncio.to_thread(update_weapon_info, weapon) # this is necessary to stop blocking

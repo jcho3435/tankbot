@@ -1,4 +1,5 @@
-import datetime, re
+from datetime import datetime, timezone
+import re
 
 from src.helpers.global_vars import xp_table, WIKI_BASE_URL, DEFAULT_PREFIX
 from src.views.pagination import PaginationView
@@ -15,7 +16,7 @@ class XPPageView(PaginationView):
     def build_embed(self) -> discord.Embed:
         start = self.current_page * self.per_page
         end = start + self.per_page
-        embed = discord.Embed(url=f"{WIKI_BASE_URL}/XP", title="XP Table", timestamp=datetime.datetime.now(), color=self.color)
+        embed = discord.Embed(url=f"{WIKI_BASE_URL}/XP", title="XP Table", timestamp=datetime.now(), color=self.color)
 
         levelField, cumulativeField, nextLevelField = "", "", ""
         keys = list(xp_table.keys())[start:end]
@@ -54,7 +55,7 @@ async def xp_table_command(ctx: commands.Context, level: str):
         else:
             raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` or `{DEFAULT_PREFIX}search {ctx.command}` to see the available argument options.")
         
-        embed = discord.Embed(url=f"{WIKI_BASE_URL}/XP", title="XP_table", timestamp=datetime.datetime.now(), color = discord.Color.from_str("#A8A8A8"))
+        embed = discord.Embed(url=f"{WIKI_BASE_URL}/XP", title="XP_table", timestamp=datetime.now(timezone.utc), color = discord.Color.from_str("#A8A8A8"))
         embed.add_field(name="Level", value=level)
         embed.add_field(name="Cumulative XP", value=xp_table[level]["cumulative"])
         embed.add_field(name="XP to next level", value=xp_table[level]["next_level"])

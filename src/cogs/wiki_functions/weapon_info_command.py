@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 
-import datetime, asyncio
+from datetime import datetime, timezone
+import asyncio
 
 from src.helpers.global_vars import WIKI_BASE_URL, DEFAULT_PREFIX, weapons, weaponData
 from src.helpers.wiki_pull.extract_wiki_weapon_info import update_weapon_info
@@ -20,7 +21,7 @@ def construct_wep_info_embed(weapon: str) -> discord.Embed:
     color = discord.Color.from_str(wepData["color"])
     stats = wepData["stats"]
 
-    embed = discord.Embed(title=wepId.replace("_", " "), url=sourceUrl, timestamp=datetime.datetime.now(), color=color)
+    embed = discord.Embed(title=wepId.replace("_", " "), url=sourceUrl, timestamp=datetime.now(timezone.utc), color=color)
     embed.set_thumbnail(url=imageUrl)
     embed.add_field(name="Description", value=description, inline=False)
     embed.add_field(name="", value="", inline=False) # create space
@@ -44,8 +45,8 @@ async def weapon_info_command(ctx: commands.Context, weapon: str):
     wepData: dict = weaponData[weapon]
 
     #update weapon if necessary
-    updated = datetime.datetime.fromisoformat(wepData["updated"])
-    delta = datetime.datetime.now() - updated
+    updated = datetime.fromisoformat(wepData["updated"])
+    delta = datetime.now() - updated
     if delta.days >= 10:
         try:
             await asyncio.to_thread(update_weapon_info, weapon) # the asyncio thread call is necessary to stop the blocking of the main thread

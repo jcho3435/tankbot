@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timezone
 
 from src.helpers import db_query_helpers as db_query
 from src.helpers.global_vars import DEFAULT_EMBED_COLOR
@@ -8,7 +8,7 @@ import discord
 from discord.ext import commands
 
 def build_profile_embed(ctx: commands.Context, user: discord.User, data: dict) -> discord.Embed:
-    embed = discord.Embed(title="\u00AC Profile", timestamp=datetime.datetime.now())
+    embed = discord.Embed(title="\u00AC Profile", timestamp=datetime.now(timezone.utc))
     if not data:
         embed.color = discord.Color.from_str("#FFFF00")
         embed.add_field(name="", value=f"There is no data for <@{user.id}>")
