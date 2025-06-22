@@ -55,10 +55,12 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
 
     
     # profile
-    @commands.hybrid_command(aliases=PROFILE_ALIASES)
+    @commands.hybrid_command(
+            aliases=PROFILE_ALIASES,
+            help=f"Displays a user's profile. Some profile data can be set with `{DEFAULT_PREFIX}set_profile`."
+    )
     @app_commands.describe(user="A user mention.")
     async def profile(self, ctx: commands.Context, user: discord.User = None):
-        """Displays a user's profile."""
         await profile_command(ctx, user)
 
     

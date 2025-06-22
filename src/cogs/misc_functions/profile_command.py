@@ -1,11 +1,21 @@
 from datetime import datetime, timezone
 
 from src.helpers import db_query_helpers as db_query
-from src.helpers.global_vars import DEFAULT_EMBED_COLOR
+from src.helpers.global_vars import xp_table
 from src.helpers.error_embed import build_error_embed
 
 import discord
 from discord.ext import commands
+
+def find_level(xp: int) -> str:
+    prev = "1"
+    for level, data in xp_table.items():
+        t = int(data["cumulative"].replace(",", ""))
+        if xp < t:
+            return prev
+        prev = level
+    
+    return prev
 
 def build_profile_embed(ctx: commands.Context, user: discord.User, data: dict) -> discord.Embed:
     embed = discord.Embed(title="\u00AC Profile", timestamp=datetime.now(timezone.utc))
@@ -23,7 +33,7 @@ def build_profile_embed(ctx: commands.Context, user: discord.User, data: dict) -
     profileStr += f"\u2794 Display name: **{user.display_name}**\n\n"
     profileStr += f"\u2794 Lifetime commands used: **{data["commands"]}**\n\n"
     profileStr += f"\u2794 Guess the Weapon wins: **{data["gtw_wins"]}**\n\n"
-    profileStr += f"\u2794 ShellShock Live XP: **{data["xp"] if data["xp"] else "--"}**"
+    profileStr += f"\u2794 ShellShock Live XP: **{data["xp"] if data["xp"] else "--"}**" + (f" \u200B (Level: {find_level(data["xp"])})" if data["xp"] else "")
 
     embed.add_field(name="", value=profileStr)
     embed.add_field(name="", value="", inline=False)

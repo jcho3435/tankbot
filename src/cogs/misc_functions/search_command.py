@@ -81,7 +81,7 @@ SEARCH_OUTPUT_DICT = {
                    "**\u2022 `xp`**: the user's ShellShock Live XP",
         "[value]": "The value to set for the provided field. Value constrains are dependent upon the field.\nFor all fields, value can be left **empty** to **reset** the field to its default value.\n" +
                    f"**\u2022 `color`**: A valid hex code for a color preceded by the `#` symbol, or a preset color name (`{DEFAULT_PREFIX}search colors`). `Default: {DEFAULT_EMBED_COLOR}`\n" +
-                   "**\u2022 `xp`**: A positive integer value. `Default: Unset`"
+                   "**\u2022 `xp`**: A positive integer value without commas. `Default: Unset`"
     },
     "search": {
         "desc": f"A more detailed help command. Search for commands and other bot-related features. Use `{DEFAULT_PREFIX}search options` for a full list of all search options.",

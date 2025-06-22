@@ -43,7 +43,7 @@ async def safe_user_update(bot: Bot, user: discord.User, query: str, args: tuple
                 await conn.commit()
                 break
         except (OperationalError, InterfaceError) as e:
-            print(f"DB disconnection detected at {datetime.datetime.now().isoformat()}. Removing connection from pool.")
+            print(f"DB disconnection detected at {datetime.now().isoformat()}. Removing connection from pool.")
             if conn:
                 conn.close()
             lastException = e
@@ -89,7 +89,7 @@ async def safe_fetch(bot: Bot, query: str, args: tuple = None) -> list:
                 await conn.rollback()
                 return retVal
         except (OperationalError, InterfaceError) as e:
-            print(f"DB disconnection detected at {datetime.datetime.now().isoformat()}. Removing connection from pool.")
+            print(f"DB disconnection detected at {datetime.now().isoformat()}. Removing connection from pool.")
             if conn:
                 conn.close()
             lastException = e
