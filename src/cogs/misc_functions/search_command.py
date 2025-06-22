@@ -4,6 +4,7 @@ from rapidfuzz import process, fuzz
 
 from src.helpers.global_vars import DEFAULT_EMBED_COLOR, DEFAULT_PREFIX
 from src.helpers import command_aliases as aliases
+from src.cogs.misc_functions.set_profile_command import DEFAULT_COLORS
 
 import discord
 from discord.ext import commands
@@ -35,7 +36,7 @@ SEARCH_OUTPUT_DICT = {
     "xp": {
         "desc": "Fetches and displays XP information from the ShellShock Live wiki. Displays a table of all levels if no level parameter is provided.",
         "syntax": f"{DEFAULT_PREFIX}xp [level]",
-        "[level]": "A level in the range 1-100. For star levels, the following patterns are accepted: `100***`, `3 star`, `3 stars`, or `3*`."
+        "[level]": "A level in the range 1-100 or a star level. For star levels, the following patterns are accepted: `100***`, `3 star`, `3 stars`, or `3*`."
     },
 
     # Games
@@ -74,13 +75,13 @@ SEARCH_OUTPUT_DICT = {
     },
     "set_profile": {
         "desc": "Allows users to set their own profile data for certain fields.",
-        "syntax": f"{DEFAULT_PREFIX}set_profile <field> <value>",
+        "syntax": f"{DEFAULT_PREFIX}set_profile <field> [value]",
         "<field>": "The field to be set. Possible fields:\n" +
-                   "**\u2022** `color`: the user's embed color on the profile command\n" +
-                   "**\u2022** `xp`: the user's ShellShock Live XP",
-        "[value]": "The value to set for the provided field. Value constrains are dependent upon the field. For all fields, value can be left empty to reset the field to its default value.\n" +
-                   "**\u2022** `color`: A valid hex code for a color, preceded by the `#` symbol\n" +
-                   "**\u2022** `xp`: A positive integer value."
+                   "**\u2022 `color`**: the user's embed color on the profile command\n" +
+                   "**\u2022 `xp`**: the user's ShellShock Live XP",
+        "[value]": "The value to set for the provided field. Value constrains are dependent upon the field.\nFor all fields, value can be left **empty** to **reset** the field to its default value.\n" +
+                   f"**\u2022 `color`**: A valid hex code for a color preceded by the `#` symbol, or a preset color name (`{DEFAULT_PREFIX}search colors`). `Default: {DEFAULT_EMBED_COLOR}`\n" +
+                   "**\u2022 `xp`**: A positive integer value. `Default: Unset`"
     },
     "search": {
         "desc": f"A more detailed help command. Search for commands and other bot-related features. Use `{DEFAULT_PREFIX}search options` for a full list of all search options.",
@@ -95,6 +96,10 @@ SEARCH_OUTPUT_DICT = {
     "aliases": {
         "desc": f"Aliases are alternate names, either for commands or for search parameters. For example, `s` is an alias of `search`, so `{DEFAULT_PREFIX}s` and `{DEFAULT_PREFIX}search` do the same thing."
     },
+    "colors": {
+        "desc": "Default color names recognized by the bot:\n\n" + 
+                "\n".join("   ".join(f"**`{color}`** `({hex})`" for color, hex in list(DEFAULT_COLORS.items())[i:i+3]) for i in range(0, len(DEFAULT_COLORS), 3)) # dont question what is happening here lmao
+    },
 
 
     # HARDCODED
@@ -106,6 +111,7 @@ SEARCH_OUTPUT_DICT = {
 SEARCH_ALIASES = {
     "parameters": ["param", "params", "parameter"],
     "aliases": ["alias"],
+    "colors": ["color"],
 
     # HARDCODED
     "options": ["option"]

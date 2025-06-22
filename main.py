@@ -49,11 +49,11 @@ async def on_command(ctx: commands.Context):
 async def on_command_error(ctx: discord.ext.commands.context.Context, error):
     errorMessage = ""
     if isinstance(error, commands.MissingRequiredArgument):
-        errorMessage = f"Missing argument: `{error.param.name}`. Please check the command usage using `>>help {ctx.command}`."
+        errorMessage = f"Missing argument: `{error.param.name}`. Please check the command usage using `{DEFAULT_PREFIX}help {ctx.command}` or `{DEFAULT_PREFIX}search {ctx.command}`."
     elif isinstance(error, commands.BadArgument) and error.args[-1].startswith("Invalid argument"):
         errorMessage = error.args[-1]
     elif isinstance(error, commands.BadArgument):
-        errorMessage = f"Invalid argument. Please use the slash command `/{ctx.command}` to see the available argument options."
+        errorMessage = f"Invalid argument. Please use the slash command `/{ctx.command}` or `{DEFAULT_PREFIX}search {ctx.command}` to see the available argument options."
     elif isinstance(error, commands.CommandNotFound):
         errorMessage = f"Command not recognized: Use `/help` or `{DEFAULT_PREFIX}help` to see a list of commands."
     elif isinstance(error, commands.UserNotFound):

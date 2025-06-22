@@ -3,7 +3,7 @@ from discord.ext import commands
 
 import datetime
 
-from src.helpers.global_vars import weapons, weaponData, WIKI_BASE_URL
+from src.helpers.global_vars import weapons, weaponData, WIKI_BASE_URL, DEFAULT_PREFIX
 # from src.helpers.custom_emojis import WEAPON_ICONS
 
 def construct_wep_tree_embed(wepList: list) -> discord.Embed:
@@ -32,7 +32,7 @@ def construct_wep_tree_embed(wepList: list) -> discord.Embed:
 
 async def weapon_tree_command(ctx: commands.Context, weapon: str):
     if weapon not in weapons:
-        raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
+        raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` or `{DEFAULT_PREFIX}search {ctx.command}` to see the available argument options.")
     
     # no need to pull data from the wiki for this weapon
     # find all weapons related to the primary weapon

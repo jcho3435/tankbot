@@ -1,6 +1,6 @@
 import datetime, re
 
-from src.helpers.global_vars import xp_table, WIKI_BASE_URL
+from src.helpers.global_vars import xp_table, WIKI_BASE_URL, DEFAULT_PREFIX
 from src.views.pagination import PaginationView
 
 from discord.ext import commands
@@ -44,7 +44,7 @@ async def xp_table_command(ctx: commands.Context, level: str):
         if level.isdigit():
             l = int(level)
             if l < 1 or l > 100:
-                raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
+                raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` or `{DEFAULT_PREFIX}search {ctx.command}` to see the available argument options.")
         elif re.fullmatch(pattern, level):
             if re.fullmatch(r"100\*{1,5}", level):
                 level = level.replace("*", "\u2605")
@@ -52,7 +52,7 @@ async def xp_table_command(ctx: commands.Context, level: str):
                 c = level[0]
                 level = f"100{'\u2605'*int(c)}"
         else:
-            raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
+            raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` or `{DEFAULT_PREFIX}search {ctx.command}` to see the available argument options.")
         
         embed = discord.Embed(url=f"{WIKI_BASE_URL}/XP", title="XP_table", timestamp=datetime.datetime.now(), color = discord.Color.from_str("#A8A8A8"))
         embed.add_field(name="Level", value=level)

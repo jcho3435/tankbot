@@ -3,8 +3,7 @@ from discord.ext import commands
 
 import datetime, asyncio
 
-from src.helpers.global_vars import WIKI_BASE_URL
-from src.helpers.global_vars import weapons, weaponData
+from src.helpers.global_vars import WIKI_BASE_URL, DEFAULT_PREFIX, weapons, weaponData
 from src.helpers.wiki_pull.extract_wiki_weapon_info import update_weapon_info
 
 def construct_wep_info_embed(weapon: str) -> discord.Embed:
@@ -40,7 +39,7 @@ def construct_wep_info_embed(weapon: str) -> discord.Embed:
 
 async def weapon_info_command(ctx: commands.Context, weapon: str):
     if weapon not in weapons:
-        raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` to see the available argument options.")
+        raise commands.BadArgument(f"Invalid argument: Please use the slash command `/{ctx.command}` or `{DEFAULT_PREFIX}search {ctx.command}` to see the available argument options.")
     
     wepData: dict = weaponData[weapon]
 

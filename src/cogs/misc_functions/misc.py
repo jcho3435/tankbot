@@ -5,7 +5,7 @@ from discord.ext import commands
 import discord
 
 from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES, SET_PROFILE_ALIASES
-from src.helpers.global_vars import TEST_GUILD
+from src.helpers.global_vars import DEFAULT_PREFIX
 from src.cogs.misc_functions.help_command import help_command
 from src.cogs.misc_functions.uptime_command import uptime_command
 from src.cogs.misc_functions.leaderboard_command import leaderboard_command
@@ -63,11 +63,13 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
 
     
     # set profile
-    @commands.hybrid_command(aliases=SET_PROFILE_ALIASES)
+    @commands.hybrid_command(
+            aliases=SET_PROFILE_ALIASES,
+            help=f"Set profile data for certain fields. Use `{DEFAULT_PREFIX}search set_profile` for detailed information."
+    )
     @app_commands.describe(field="The field that you would like to set.")
     @app_commands.describe(value="The value to set for for the provided field. Value constraints depend on the field being set.")
-    async def set_profile(self, ctx: commands.Context, field: FieldOptions, value: str = None):
-        """Set profile data for certain fields. Use /search set_profile for detailed information."""
+    async def set_profile(self, ctx: commands.Context, field: FieldOptions, *, value: str = None):
         await set_profile_command(ctx, field, value)
 
 
@@ -102,7 +104,7 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     #endregion
 
     #region error handlers
-    @set_profile.error
+    @set_profile.error # This will catch the error and pass it to the on_command_error event
     async def set_profile_error(self, ctx: commands.Context, error: commands.CommandError):
         return
 
