@@ -8,7 +8,7 @@ from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIAS
 from src.helpers.global_vars import DEFAULT_PREFIX
 from src.cogs.misc_functions.help_command import help_command
 from src.cogs.misc_functions.uptime_command import uptime_command
-from src.cogs.misc_functions.leaderboard_command import leaderboard_command
+from src.cogs.misc_functions.leaderboard_command import leaderboard_command, LeaderboardTypes
 from src.cogs.misc_functions.profile_command import profile_command
 from src.cogs.misc_functions.set_profile_command import set_profile_command, FieldOptions
 from src.cogs.misc_functions.search_command import search_command, SEARCH_OUTPUT_DICT
@@ -44,14 +44,11 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
 
 
     # leaderboard 
-    @commands.hybrid_command(
-        aliases=LEADERBOARD_ALIASES,
-        help="Displays leaderboard data for the top 200 players by XP. Leaderboard updates every 12 hours.",
-        description="Displays leaderboard data for the top 200 players by XP."
-    )
+    @commands.hybrid_command(aliases=LEADERBOARD_ALIASES)
     @app_commands.describe(page="Leaderboard page (default = 1). Accepted values: [1, 20].")
-    async def leaderboard(self, ctx: commands.Context, page: str = "1"):
-        await leaderboard_command(ctx, page)
+    async def leaderboard(self, ctx: commands.Context, leaderboard_type: LeaderboardTypes, page: str = "1"):
+        """Displays leaderboard data for the chosen leaderboard type."""
+        await leaderboard_command(ctx, leaderboard_type, page)
 
     
     # profile
@@ -107,7 +104,8 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
 
     #region error handlers
     @set_profile.error # This will catch the error and pass it to the on_command_error event
-    async def set_profile_error(self, ctx: commands.Context, error: commands.CommandError):
+    @leaderboard.error
+    async def catch_enum_cast_error(self, ctx: commands.Context, error: commands.CommandError):
         return
 
     #endregion

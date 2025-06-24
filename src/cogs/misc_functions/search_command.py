@@ -64,9 +64,12 @@ SEARCH_OUTPUT_DICT = {
         "syntax": f"{DEFAULT_PREFIX}uptime"
     },
     "leaderboard": {
-        "desc": "Displays a table of leaderboard data for the top 200 players by XP, pulled from the Steam leaderboards. Leaderboard updates every 12 hours.",
-        "syntax": f"{DEFAULT_PREFIX}leaderboard [page=1]",
-        "[page=1]": "The starting page number for the leaderboards table. Must be a value between 1-20 inclusive. `Default: 1`."
+        "desc": "Displays leaderboard data for the chosen leaderboard type.",
+        "syntax": f"{DEFAULT_PREFIX}leaderboard <leaderboard_type> [page=1]",
+        "<leaderboard_type>": "The type of leaderboard. Supported values include:\n" +
+                              "**\u2022 `xp`**: The top 200 players from the global ShellShock Live XP leaderboard. Updates automatically every 12 hours.\n" +
+                              "**\u2022 `guess_the_weapon`**: The top 10 users who have won the most Guess the Weapon games. Alias: `gtw`.",
+        "[page=1]": "The starting page number for the leaderboards table. Must be a value between 1-20 inclusive. `Default: 1`.\nThis parameter is currently only supported by the xp leaderboard."
     },
     "profile": {
         "desc": f"Displays a user's profile. If no parameter is given, then it displays the profile of the user who runs the command.\n\nSome profile data can be set manually. See `{DEFAULT_PREFIX}set_profile`",
