@@ -4,6 +4,7 @@ LEADERBOARD_ALIASES = ["leaderboards", "lb"]
 PROFILE_ALIASES = ["userinfo", "user-info", "me", "user-lookup", "userlookup"]
 SET_PROFILE_ALIASES = ["set-profile", "setprofile", "profile-set", "profileset", "set", "sp"]
 SEARCH_ALIASES = ["info", "lookup", "s"]
+INVITE_ALIASES = ["inv", "add"]
 
 # WIKI
 WEAPON_INFO_ALIASES = ["wi", "weaponinfo", "weapon-info", "wepinfo", "wep-info"]

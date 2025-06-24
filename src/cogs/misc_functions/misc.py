@@ -4,7 +4,7 @@ from discord import app_commands
 from discord.ext import commands
 import discord
 
-from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES, SET_PROFILE_ALIASES
+from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES, SET_PROFILE_ALIASES, INVITE_ALIASES
 from src.helpers.global_vars import DEFAULT_PREFIX
 from src.cogs.misc_functions.help_command import help_command
 from src.cogs.misc_functions.uptime_command import uptime_command
@@ -78,6 +78,12 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     async def search(self, ctx: commands.Context, query: str):
         """A more detailed help command. Search for commands and other bot-related features.""" # This command's output is hard coded
         await search_command(ctx, query)
+
+    
+    @commands.hybrid_command()
+    async def invite(self, ctx: commands.Context):
+        """Get the bot's invite link."""
+        await ctx.send(f"Click [here](https://discord.com/oauth2/authorize?client_id=1372529262065750117&permissions=563364485254208&integration_type=0&scope=bot) to invite the bot!")
 
 
     #region autocompletes

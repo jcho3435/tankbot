@@ -91,6 +91,10 @@ SEARCH_OUTPUT_DICT = {
         "syntax": f"{DEFAULT_PREFIX}search <query>",
         "<query>": f"A command, feature, etc. that the bot supports. See a full list of options by using `{DEFAULT_PREFIX}search options`"
     },
+    "invite": {
+        "desc": "Get the bot's invite link.",
+        "syntax": f"{DEFAULT_PREFIX}invite"
+    },
 
     # Others
     "parameters": {
