@@ -4,7 +4,7 @@ from rapidfuzz import process, fuzz
 
 from src.helpers.global_vars import DEFAULT_EMBED_COLOR, DEFAULT_PREFIX
 from src.helpers import command_aliases as aliases
-from src.cogs.misc_functions.set_profile_command import DEFAULT_COLORS
+from src.cogs.informational_functions.set_profile_command import DEFAULT_COLORS
 
 import discord
 from discord.ext import commands
@@ -39,6 +39,37 @@ SEARCH_OUTPUT_DICT = {
         "[level]": "A level in the range 1-100 or a star level. For star levels, the following patterns are accepted: `100***`, `3 star`, `3 stars`, or `3*`."
     },
 
+    # Informational
+    "leaderboard": {
+        "desc": "Displays leaderboard data for the chosen leaderboard type.",
+        "syntax": f"{DEFAULT_PREFIX}leaderboard <leaderboard_type> [page=1]",
+        "<leaderboard_type>": "The type of leaderboard. Supported values include:\n" +
+                              "**\u2022 `xp`**: The top 200 players from the global ShellShock Live XP leaderboard. Updates automatically every 12 hours.\n" +
+                              "**\u2022 `guess_the_weapon`**: The top 10 users who have won the most Guess the Weapon games. Alias: `gtw`.\n" +
+                              "**\u2022 `command_count`**: The top 10 users who have used the most commands. Alias: `commands`",
+        "[page=1]": "The starting page number for the leaderboards table. Must be a value between 1-20 inclusive. `Default: 1`.\nThis parameter is currently only supported by the xp leaderboard."
+    },
+    "profile": {
+        "desc": f"Displays a user's profile. If no parameter is given, then it displays the profile of the user who runs the command.\n\nSome profile data can be set manually. See `{DEFAULT_PREFIX}set_profile`",
+        "syntax": f"{DEFAULT_PREFIX}profile [user]",
+        "[user]": "A user mention, e.g. `@Tank Game#0362`."
+    },
+    "set_profile": {
+        "desc": "Allows users to set their own profile data for certain fields.",
+        "syntax": f"{DEFAULT_PREFIX}set_profile <field> [value]",
+        "<field>": "The field to be set. Possible fields:\n" +
+                   "**\u2022 `color`**: the user's embed color on the profile command\n" +
+                   "**\u2022 `xp`**: the user's ShellShock Live XP",
+        "[value]": "The value to set for the provided field. Value constrains are dependent upon the field.\nFor all fields, value can be left **empty** to **reset** the field to its default value.\n" +
+                   f"**\u2022 `color`**: A valid hex code for a color preceded by the `#` symbol, or a preset color name (`{DEFAULT_PREFIX}search colors`). `Default: {DEFAULT_EMBED_COLOR}`\n" +
+                   "**\u2022 `xp`**: A positive integer value without commas. `Default: Unset`"
+    },
+    "search": {
+        "desc": f"A more detailed help command. Search for commands and other bot-related features. Use `{DEFAULT_PREFIX}search options` for a full list of all search options.",
+        "syntax": f"{DEFAULT_PREFIX}search <query>",
+        "<query>": f"A command, feature, etc. that the bot supports. See a full list of options by using `{DEFAULT_PREFIX}search options`"
+    },
+
     # Games
     "guess_the_weapon": {
         "desc": "Starts a game of Guess the Weapon with up to 5 rounds. Only one game of Guess the Weapon can be active per text channel, and the user who started the game can use `>>quit` to exit the game in that channel.\n\n" +
@@ -62,34 +93,6 @@ SEARCH_OUTPUT_DICT = {
     "uptime": {
         "desc": "Responds with the amount of time that has elapsed since the bot has last come online.\n`d = days`\n`h = hours`\n`m = minutes`\n`s = seconds`",
         "syntax": f"{DEFAULT_PREFIX}uptime"
-    },
-    "leaderboard": {
-        "desc": "Displays leaderboard data for the chosen leaderboard type.",
-        "syntax": f"{DEFAULT_PREFIX}leaderboard <leaderboard_type> [page=1]",
-        "<leaderboard_type>": "The type of leaderboard. Supported values include:\n" +
-                              "**\u2022 `xp`**: The top 200 players from the global ShellShock Live XP leaderboard. Updates automatically every 12 hours.\n" +
-                              "**\u2022 `guess_the_weapon`**: The top 10 users who have won the most Guess the Weapon games. Alias: `gtw`.",
-        "[page=1]": "The starting page number for the leaderboards table. Must be a value between 1-20 inclusive. `Default: 1`.\nThis parameter is currently only supported by the xp leaderboard."
-    },
-    "profile": {
-        "desc": f"Displays a user's profile. If no parameter is given, then it displays the profile of the user who runs the command.\n\nSome profile data can be set manually. See `{DEFAULT_PREFIX}set_profile`",
-        "syntax": f"{DEFAULT_PREFIX}profile [user]",
-        "[user]": "A user mention, e.g. `@Tank Game#0362`."
-    },
-    "set_profile": {
-        "desc": "Allows users to set their own profile data for certain fields.",
-        "syntax": f"{DEFAULT_PREFIX}set_profile <field> [value]",
-        "<field>": "The field to be set. Possible fields:\n" +
-                   "**\u2022 `color`**: the user's embed color on the profile command\n" +
-                   "**\u2022 `xp`**: the user's ShellShock Live XP",
-        "[value]": "The value to set for the provided field. Value constrains are dependent upon the field.\nFor all fields, value can be left **empty** to **reset** the field to its default value.\n" +
-                   f"**\u2022 `color`**: A valid hex code for a color preceded by the `#` symbol, or a preset color name (`{DEFAULT_PREFIX}search colors`). `Default: {DEFAULT_EMBED_COLOR}`\n" +
-                   "**\u2022 `xp`**: A positive integer value without commas. `Default: Unset`"
-    },
-    "search": {
-        "desc": f"A more detailed help command. Search for commands and other bot-related features. Use `{DEFAULT_PREFIX}search options` for a full list of all search options.",
-        "syntax": f"{DEFAULT_PREFIX}search <query>",
-        "<query>": f"A command, feature, etc. that the bot supports. See a full list of options by using `{DEFAULT_PREFIX}search options`"
     },
     "invite": {
         "desc": "Get the bot's invite link.",
@@ -187,7 +190,7 @@ async def search_command(ctx: commands.Context, query: str):
         await ctx.send(embed=embed)
         return
 
-    embed = discord.Embed(title=f"Search > {query}", color=discord.Color.from_str(DEFAULT_EMBED_COLOR), description=res["desc"])
+    embed = discord.Embed(title=f"Search > {query.capitalize()}", color=discord.Color.from_str(DEFAULT_EMBED_COLOR), description=res["desc"])
     if "syntax" in res:
         embed.add_field(name="Command Syntax", value=f"```{res["syntax"]}```")
 
@@ -207,5 +210,9 @@ async def search_command(ctx: commands.Context, query: str):
     if command_aliases:
         aliasStr = ", ".join(command_aliases)
         embed.add_field(name="Aliases", value=f"```{aliasStr}```")
+
+    cmd: commands.Command = ctx.bot.get_command(query)
+    if cmd:
+        embed.title += f" ({cmd.cog_name})"
 
     await ctx.send(embed=embed)

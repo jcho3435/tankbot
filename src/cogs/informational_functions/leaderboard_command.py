@@ -16,8 +16,13 @@ XP_LB_TIME_BETWEEN_UPDATES = timedelta(hours=12)
 
 class LeaderboardTypes(Enum):
     xp="xp"
+
     guess_the_weapon="guess_the_weapon"
     gtw="gtw"
+
+    command_count="command_count"
+    commands="commands"
+
 
 class XPLBPageView(PaginationView):
     def __init__(self, ctx: commands.Context, current_page: int = 0):
@@ -76,11 +81,16 @@ async def xp_leaderboard_command(ctx: commands.Context, page: str):
             async with xp_lb_update_lock:
                 await asyncio.to_thread(update_xp_lb_var)
 
-async def gtw_leaderboard_command(ctx: commands.Context):
+async def gtw_commandcount_leaderboard_command(ctx: commands.Context, lbtype: LeaderboardTypes):
     embed = discord.Embed(title="Guess the Weapon Top 10", color=discord.Color.from_str(DEFAULT_EMBED_COLOR), timestamp=datetime.now(timezone.utc), description=f"-# Play Guess the Weapon by using the command `{DEFAULT_PREFIX}guess_the_weapon`!")
+    sql_col, emb_col = "", ""
+    if lbtype == LeaderboardTypes.command_count or lbtype == LeaderboardTypes.commands:
+        sql_col, emb_col = "commands", "Lifetime Commands"
+    else:
+        sql_col, emb_col = "gtw_wins", "Guess the Weapon Wins"
     data = []
     try:
-        data = await db_query.safe_fetch(ctx.bot, "SELECT id, gtw_wins FROM users ORDER BY gtw_wins DESC LIMIT 10")
+        data = await db_query.safe_fetch(ctx.bot, f"SELECT id, {sql_col} FROM users ORDER BY {sql_col} DESC LIMIT 10")
     except Exception as e:
         errorEmbed = build_error_embed("An unexpected error occurred!", ctx.author)
         await ctx.send(embed=errorEmbed)
@@ -89,11 +99,11 @@ async def gtw_leaderboard_command(ctx: commands.Context):
     rankField, userField, winsField = "\n".join([str(i) for i in range(1, 11)]), "", ""
     for entry in data:
         userField += f"<@{entry["id"]}>\n"
-        winsField += f"{entry["gtw_wins"]}\n"
+        winsField += f"{entry[sql_col]}\n"
 
     embed.add_field(name="Rank", value=rankField)
     embed.add_field(name="User", value=userField)
-    embed.add_field(name="Guess the Weapon Wins", value=winsField)
+    embed.add_field(name=emb_col, value=winsField)
 
     await ctx.send(embed=embed)
 
@@ -104,7 +114,7 @@ async def leaderboard_command(ctx: commands.Context, leaderboard_type: Leaderboa
     match leaderboard_type:
         case LeaderboardTypes.xp:
             await xp_leaderboard_command(ctx, page)
-        case LeaderboardTypes.guess_the_weapon | LeaderboardTypes.gtw:
-            await gtw_leaderboard_command(ctx)
+        case LeaderboardTypes.guess_the_weapon | LeaderboardTypes.gtw | LeaderboardTypes.command_count | LeaderboardTypes.commands:
+            await gtw_commandcount_leaderboard_command(ctx, leaderboard_type)
         case _:
             await ctx.send("Well... I don't know how you're seeing this, but good job. This isn't supposed to be reachable.")

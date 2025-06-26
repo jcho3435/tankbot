@@ -99,8 +99,9 @@ async def bot_startup():
     # cogs
     cogFiles = [
         "wiki",
+        "informational",
         "games",
-        "misc"
+        "misc",
     ]
 
     for file in cogFiles:

@@ -1,9 +1,11 @@
-# MISC
-COMMAND_COUNT_ALIASES = ["command-count", "commandcount"]
+# INFORMATIONAL
 LEADERBOARD_ALIASES = ["leaderboards", "lb"]
 PROFILE_ALIASES = ["userinfo", "user-info", "me", "user-lookup", "userlookup"]
 SET_PROFILE_ALIASES = ["set-profile", "setprofile", "profile-set", "profileset", "set", "sp"]
 SEARCH_ALIASES = ["info", "lookup", "s"]
+
+# MISC
+COMMAND_COUNT_ALIASES = ["command-count", "commandcount"]
 INVITE_ALIASES = ["inv", "add"]
 
 # WIKI
