@@ -4,11 +4,12 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-from src.helpers.command_aliases import LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES, SET_PROFILE_ALIASES 
+from src.helpers.command_aliases import LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES, SET_PROFILE_ALIASES, PLAYER_COUNT_ALIASES 
 from src.helpers.global_vars import DEFAULT_PREFIX
 from src.cogs.informational_functions.leaderboard_command import leaderboard_command, LeaderboardTypes
 from src.cogs.informational_functions.profile_command import profile_command
 from src.cogs.informational_functions.set_profile_command import set_profile_command, FieldOptions
+from src.cogs.informational_functions.player_count_command import player_count_command
 from src.cogs.informational_functions.search_command import search_command, SEARCH_OUTPUT_DICT
 
 class Informational(commands.Cog, name="Informational"):
@@ -46,6 +47,12 @@ class Informational(commands.Cog, name="Informational"):
     @app_commands.describe(value="The value to set for for the provided field. Value constraints depend on the field being set.")
     async def set_profile(self, ctx: commands.Context, field: FieldOptions, *, value: str = None):
         await set_profile_command(ctx, field, value)
+
+    
+    # player count
+    @commands.hybrid_command(aliases=PLAYER_COUNT_ALIASES)
+    async def player_count(self, ctx: commands.Context):
+        await player_count_command(ctx)
 
 
     # search

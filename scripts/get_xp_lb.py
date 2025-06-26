@@ -1,6 +1,7 @@
 r"""
 This is a script that will pull the first 200 positions of the XP leaderboard from steam's
-leaderboard web page, and store the data in data/xp_lb.json. 
+leaderboard web page, and store the data in data/xp_lb.json. Aside from setting the bot
+up on a new server, this should never need to be run.
 
 NOTE: This script should be run from the root of the project, e.g. C://path/to/project/Tank\ Game
 """

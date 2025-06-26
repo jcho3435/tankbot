@@ -2,6 +2,7 @@
 LEADERBOARD_ALIASES = ["leaderboards", "lb"]
 PROFILE_ALIASES = ["userinfo", "user-info", "me", "user-lookup", "userlookup"]
 SET_PROFILE_ALIASES = ["set-profile", "setprofile", "profile-set", "profileset", "set", "sp"]
+PLAYER_COUNT_ALIASES = ["players", "online", "pcount", "playing"]
 SEARCH_ALIASES = ["info", "lookup", "s"]
 
 # MISC

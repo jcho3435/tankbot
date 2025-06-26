@@ -128,7 +128,7 @@ SEARCH_ALIASES = {
 }
 
 def build_options_embed() -> discord.Embed:
-    embed = discord.Embed(title=f"Search > options", color=discord.Color.from_str(DEFAULT_EMBED_COLOR))
+    embed = discord.Embed(title=f"Search > Options", color=discord.Color.from_str(DEFAULT_EMBED_COLOR))
     extraOptions = list(SEARCH_ALIASES.keys())
     commandOptions = list(SEARCH_OUTPUT_DICT.keys())
     for option in extraOptions:
@@ -180,9 +180,9 @@ async def search_command(ctx: commands.Context, query: str):
         matches = process.extract(query, options, scorer=fuzz.ratio, score_cutoff=55, limit=10)
         embed = None
         if not matches:
-            embed = discord.Embed(title=f"Search > {query}", color=discord.Color.from_str("#FF0000"), timestamp=datetime.now(timezone.utc), description=f"No search results found for `{query}`!")
+            embed = discord.Embed(title=f"Search > {query.capitalize()}", color=discord.Color.from_str("#FF0000"), timestamp=datetime.now(timezone.utc), description=f"No search results found for `{query}`!")
         else:
-            embed = discord.Embed(title=f"Search > {query}", color=discord.Color.from_str("#FFFF00"), timestamp=datetime.now(timezone.utc), description=f"No matches found. Did you mean to search for one of the following?")
+            embed = discord.Embed(title=f"Search > {query.capitalize()}", color=discord.Color.from_str("#FFFF00"), timestamp=datetime.now(timezone.utc), description=f"No matches found. Did you mean to search for one of the following?")
             desc = ""
             for match, _, _ in matches:
                 desc += f"`{match}`\n"

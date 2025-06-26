@@ -26,3 +26,7 @@ level_options = list(xp_table.keys()) + [f"{i}*" for i in range(1, 6)]
 # xp leaderboard
 XP_LEADERBOARD_JSON_FILE = "data/xp_lb.json"
 xp_leaderboard: dict = load_json_file(XP_LEADERBOARD_JSON_FILE)
+
+# player count
+PLAYER_COUNT_JSON_FILE = "data/player_count.json"
+player_count: dict = load_json_file(PLAYER_COUNT_JSON_FILE)
