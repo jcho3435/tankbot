@@ -2,6 +2,8 @@
 Fetches game news from steam API. Aside from setting the 
 bot up on a new server, or if you want to do a quick manual
 update, this should never need to be run.
+
+All news: https://store.steampowered.com/news/app/326460
 """
 
 # this will be needed for all scripts
@@ -12,10 +14,12 @@ root = os.path.abspath(os.path.join(curr_dir, '..'))
 sys.path.insert(0, root)
 
 import json
-import requests
+from src.helpers.global_vars import NEWS_JSON_FILE
+from src.helpers.wiki_pull.get_news import get_news_data
 
-res = requests.get("https://api.steampowered.com/ISteamNews/GetNewsForApp/v2/?appid=326460&count=5").json()
-news = res["appnews"]["newsitems"]
+data = get_news_data()
 
-for item in news:
-    print(item["title"])
+with open(NEWS_JSON_FILE, "w+") as f:
+    json.dump(data, f, indent=2)
+
+print(f"Successfully wrote {len(data["data"])} news entries to {NEWS_JSON_FILE}.")

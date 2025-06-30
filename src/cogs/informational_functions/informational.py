@@ -4,11 +4,12 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 
-from src.helpers.command_aliases import LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES, SET_PROFILE_ALIASES, PLAYER_COUNT_ALIASES 
+from src.helpers.command_aliases import LEADERBOARD_ALIASES, PROFILE_ALIASES, SEARCH_ALIASES, SET_PROFILE_ALIASES, RECENT_NEWS_ALIASES, PLAYER_COUNT_ALIASES 
 from src.helpers.global_vars import DEFAULT_PREFIX
 from src.cogs.informational_functions.leaderboard_command import leaderboard_command, LeaderboardTypes
 from src.cogs.informational_functions.profile_command import profile_command
 from src.cogs.informational_functions.set_profile_command import set_profile_command, FieldOptions
+from src.cogs.informational_functions.recent_news_command import recent_news_command
 from src.cogs.informational_functions.player_count_command import player_count_command
 from src.cogs.informational_functions.search_command import search_command, SEARCH_OUTPUT_DICT
 
@@ -54,6 +55,13 @@ class Informational(commands.Cog, name="Informational"):
     async def player_count(self, ctx: commands.Context):
         """Displays the current number of active players on ShellShock Live (Steam only)"""
         await player_count_command(ctx)
+
+
+    # recent news
+    @commands.hybrid_command(aliases=RECENT_NEWS_ALIASES)
+    async def recent_news(self, ctx: commands.Context):
+        """Gets the 5 most recent ShellShock Live news entries from Steam."""
+        await recent_news_command(ctx)
 
 
     # search

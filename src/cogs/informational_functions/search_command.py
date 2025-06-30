@@ -68,6 +68,10 @@ SEARCH_OUTPUT_DICT = {
         "desc": "Displays the current number of active players on ShellShock Live. Player count data is retrieved from the Steam Web API. Updates on command calls after at least 30 seconds have elapsed since the previous update.",
         "syntax": f"{DEFAULT_PREFIX}player_count"
     },
+    "recent_news": {
+        "desc": "Gets the 5 most recent ShellShock Live news entries from Steam. News data is retrieved from Steam Web API. Updates every 24 hours.",
+        "syntax": f"{DEFAULT_PREFIX}recent_news"
+    },
     "search": {
         "desc": f"A more detailed help command. Search for commands and other bot-related features. Use `{DEFAULT_PREFIX}search options` for a full list of all search options.",
         "syntax": f"{DEFAULT_PREFIX}search <query>",

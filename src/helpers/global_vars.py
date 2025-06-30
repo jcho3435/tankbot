@@ -1,6 +1,8 @@
 import json, os
 import discord
 
+from typing import List
+
 TEST_GUILD = discord.Object(id=os.getenv("TEST_GUILD"))
 
 DEFAULT_PREFIX = ">>"
@@ -10,18 +12,20 @@ DEFAULT_EMBED_COLOR = "#00A6FF"
 
 
 def load_json_file(filename):
+    if not os.path.exists(filename):
+        return None
     with open(filename, "r") as f:
         return json.load(f)
     
 # weapons
 WEAPONS_JSON_FILE = "data/weapons.json"
 weaponData: dict = load_json_file(WEAPONS_JSON_FILE)
-weapons = list(weaponData.keys())
+weapons: List[str] = list(weaponData.keys())
 
 # xp table
 XP_TABLE_JSON_FILE = "data/xp_table.json"
 xp_table: dict = load_json_file(XP_TABLE_JSON_FILE)
-level_options = list(xp_table.keys()) + [f"{i}*" for i in range(1, 6)]
+level_options: List[str] = list(xp_table.keys()) + [f"{i}*" for i in range(1, 6)]
 
 # xp leaderboard
 XP_LEADERBOARD_JSON_FILE = "data/xp_lb.json"
