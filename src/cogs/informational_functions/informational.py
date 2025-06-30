@@ -52,6 +52,7 @@ class Informational(commands.Cog, name="Informational"):
     # player count
     @commands.hybrid_command(aliases=PLAYER_COUNT_ALIASES)
     async def player_count(self, ctx: commands.Context):
+        """Displays the current number of active players on ShellShock Live (Steam only)"""
         await player_count_command(ctx)
 
 

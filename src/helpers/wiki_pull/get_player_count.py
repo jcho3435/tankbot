@@ -15,7 +15,8 @@ def update_player_count_var():
     while t < maxTries:
         try:
             dataDict = get_player_count_data()
-            player_count.update(dataDict)
+            player_count["old"] = player_count["new"]
+            player_count["new"] = dataDict
             break
         except Exception as e:
             t += 1

@@ -16,7 +16,8 @@ from src.helpers.global_vars import PLAYER_COUNT_JSON_FILE
 from src.helpers.wiki_pull.get_player_count import get_player_count_data
 
 
-data = get_player_count_data()
+pulled = get_player_count_data()
+data = {"old": pulled, "new": pulled}
 
 with open(PLAYER_COUNT_JSON_FILE, "w+") as f:
     json.dump(data, f, indent=2)

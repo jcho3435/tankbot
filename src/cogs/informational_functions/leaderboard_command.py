@@ -12,7 +12,7 @@ import src.helpers.db_query_helpers as db_query
 from src.views.pagination import PaginationView
 
 xp_lb_update_lock = asyncio.Lock()
-XP_LB_TIME_BETWEEN_UPDATES = timedelta(hours=12)
+XP_LB_TIME_BETWEEN_UPDATES = timedelta(hours=8)
 
 class LeaderboardTypes(Enum):
     xp="xp"

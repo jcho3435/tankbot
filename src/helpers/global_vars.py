@@ -30,3 +30,7 @@ xp_leaderboard: dict = load_json_file(XP_LEADERBOARD_JSON_FILE)
 # player count
 PLAYER_COUNT_JSON_FILE = "data/player_count.json"
 player_count: dict = load_json_file(PLAYER_COUNT_JSON_FILE)
+
+# recent game news
+NEWS_JSON_FILE = "data/news.json"
+news: dict = load_json_file(NEWS_JSON_FILE)
