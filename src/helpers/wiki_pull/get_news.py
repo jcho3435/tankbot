@@ -25,7 +25,7 @@ def update_news_var():
     maxTries, t, lastException = 3, 0, ""
     while t < maxTries:
         try:
-            dataDict = get_news_data
+            dataDict = get_news_data()
             news.clear()
             news.update(dataDict)
             break

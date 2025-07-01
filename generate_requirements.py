@@ -1,6 +1,8 @@
 """
 This script is used to generate requirements.txt. It is necessary to run this
 instead of running pipreqs directly due to bugs with pipreqs mapping.
+
+Make sure venv is active before running.
 """
 
 import subprocess

@@ -20,7 +20,7 @@ async def recent_news_command(ctx: commands.Context):
             traceback.print_exception(type(e), e, e.__traceback__)
             print("Proceeding with old data")
 
-    embed = discord.Embed(title="Most Recent ShellShock Live News", timestamp=datetime.now(timezone.utc), color=discord.Color.from_str(DEFAULT_EMBED_COLOR))
+    embed = discord.Embed(title="Recent ShellShock Live News", timestamp=datetime.now(timezone.utc), color=discord.Color.from_str(DEFAULT_EMBED_COLOR), description=f"-# Last updated <t:{int(datetime.fromisoformat(news["updated"]).timestamp())}>.\n-# [See all](https://store.steampowered.com/news/app/326460)")
     
     embed.add_field(name="Post", value="")
     embed.add_field(name="Author", value="")
