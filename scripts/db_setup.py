@@ -43,6 +43,21 @@ async def db_setup():
         await conn.commit()
         print("Successfully created the Users table.")
 
+        await cur.execute(
+            f"""
+            CREATE TABLE IF NOT EXISTS Feedback (
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                userid BIGINT NOT NULL,
+                subject VARCHAR(150),
+                body VARCHAR(4000) NOT NULL,
+                date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (userid) REFERENCES users(id)
+            )
+            """
+        )
+        await conn.commit()
+        print("Successfully created the Feedback table.")
+
     await conn.ensure_closed()
 
 asyncio.run(db_setup())

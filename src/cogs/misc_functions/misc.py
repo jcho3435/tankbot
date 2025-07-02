@@ -1,13 +1,11 @@
-from rapidfuzz import fuzz, process
-
 from discord import app_commands
 from discord.ext import commands
 import discord
 
-from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, INVITE_ALIASES
-from src.helpers.global_vars import DEFAULT_PREFIX
+from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, INVITE_ALIASES, FEEDBACK_ALIASES
 from src.cogs.misc_functions.help_command import help_command
 from src.cogs.misc_functions.uptime_command import uptime_command
+from src.cogs.misc_functions.feedback_command import feedback_command
 
 
 class Miscellaneous(commands.Cog, name="Miscellaneous"):
@@ -38,12 +36,18 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
         await uptime_command(ctx)
 
 
-
+    # invite
     @commands.hybrid_command(aliases=INVITE_ALIASES)
     async def invite(self, ctx: commands.Context):
         """Get the bot's invite link."""
         await ctx.send(f"Click [here](https://discord.com/oauth2/authorize?client_id=1372529262065750117&permissions=563364485254208&integration_type=0&scope=bot) to invite the bot!")
 
+
+    # feedback
+    @commands.hybrid_command(aliases=FEEDBACK_ALIASES)
+    async def feedback(self, ctx: commands.Context):
+        """Send feedback or suggestions for the bot"""
+        await feedback_command(ctx)
 
 
 async def setup(bot: commands.Bot):
