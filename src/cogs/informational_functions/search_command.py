@@ -94,14 +94,6 @@ SEARCH_OUTPUT_DICT = {
     },
 
     # Miscellaneous
-    "command_count": {
-        "desc": "Responds with the number of commands that have been run globally since the last time the bot went offline.",
-        "syntax": f"{DEFAULT_PREFIX}command_count"
-    },
-    "uptime": {
-        "desc": "Responds with the amount of time that has elapsed since the bot has last come online.\n`d = days`\n`h = hours`\n`m = minutes`\n`s = seconds`",
-        "syntax": f"{DEFAULT_PREFIX}uptime"
-    },
     "invite": {
         "desc": "Get the bot's invite link.",
         "syntax": f"{DEFAULT_PREFIX}invite"
@@ -109,6 +101,18 @@ SEARCH_OUTPUT_DICT = {
     "feedback": {
         "desc": "Send feedback, suggestions, or bug reports for the bot. 24 hour cooldown. Do not abuse this command or your account my be blacklisted from using this bot.",
         "syntax": f"{DEFAULT_PREFIX}feedback",
+    },
+    "command_count": {
+        "desc": "Shows the number of commands that have been run globally since the last time the bot went offline.",
+        "syntax": f"{DEFAULT_PREFIX}command_count"
+    },
+    "uptime": {
+        "desc": "Shows the amount of time that has elapsed since the bot has last come online.\n`d = days`\n`h = hours`\n`m = minutes`\n`s = seconds`",
+        "syntax": f"{DEFAULT_PREFIX}uptime"
+    },
+    "ping": {
+        "desc": "Shows the bot's latency.",
+        "syntax": f"{DEFAULT_PREFIX}ping"
     },
 
     # Others

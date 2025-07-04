@@ -4,8 +4,9 @@ import discord
 
 from src.helpers.command_aliases import COMMAND_COUNT_ALIASES, INVITE_ALIASES, FEEDBACK_ALIASES
 from src.cogs.misc_functions.help_command import help_command
-from src.cogs.misc_functions.uptime_command import uptime_command
 from src.cogs.misc_functions.feedback_command import feedback_command
+from src.cogs.misc_functions.uptime_command import uptime_command
+from src.cogs.misc_functions.ping_command import ping_command
 
 
 class Miscellaneous(commands.Cog, name="Miscellaneous"):
@@ -21,20 +22,6 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
         await interaction.response.send_message("Your help embed is being prepared. If no embed is generated, please use the prefix command `>>help` instead.")
         await help_command(self, interaction, command)
 
-    
-    # command count
-    @commands.hybrid_command(aliases=COMMAND_COUNT_ALIASES)
-    async def command_count(self, ctx: commands.Context):
-        """Responds with the number of commands that have been run since the last time the bot went offline."""
-        await ctx.send(f"**{ctx.bot.commandCount}** command(s) have been sent since the bot last went went offline.")
-
-
-    # uptime
-    @commands.hybrid_command()
-    async def uptime(self, ctx: commands.Context):
-        """Responds with the amount of time that has elapsed since the bot has last come online."""
-        await uptime_command(ctx)
-
 
     # invite
     @commands.hybrid_command(aliases=INVITE_ALIASES)
@@ -48,6 +35,27 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     async def feedback(self, ctx: commands.Context):
         """Send feedback, suggestions, or bug reports for the bot."""
         await feedback_command(ctx)
+
+
+    # command count
+    @commands.hybrid_command(aliases=COMMAND_COUNT_ALIASES)
+    async def command_count(self, ctx: commands.Context):
+        """Shows the number of commands that have been run since the last time the bot went offline."""
+        await ctx.send(f"**{ctx.bot.commandCount}** command(s) have been sent since the bot last went went offline.")
+
+
+    # uptime
+    @commands.hybrid_command()
+    async def uptime(self, ctx: commands.Context):
+        """Shows the amount of time that has elapsed since the bot has last come online."""
+        await uptime_command(ctx)
+
+    
+    # ping
+    @commands.hybrid_command()
+    async def ping(self, ctx: commands.Context):
+        """Shows the bot's latency."""
+        await ping_command(ctx)
 
 
 async def setup(bot: commands.Bot):

@@ -7,9 +7,9 @@ RECENT_NEWS_ALIASES = ["news", "updatewhen", "update-when", "pleasekyle"]
 SEARCH_ALIASES = ["info", "lookup", "s"]
 
 # MISC
-COMMAND_COUNT_ALIASES = ["command-count", "commandcount"]
 INVITE_ALIASES = ["inv", "add"]
 FEEDBACK_ALIASES = ["suggest", "suggestions", "bug", "bugreport", "bug-report"]
+COMMAND_COUNT_ALIASES = ["command-count", "commandcount"]
 
 # WIKI
 WEAPON_INFO_ALIASES = ["wi", "weaponinfo", "weapon-info", "wepinfo", "wep-info"]
