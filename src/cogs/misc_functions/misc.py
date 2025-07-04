@@ -46,7 +46,7 @@ class Miscellaneous(commands.Cog, name="Miscellaneous"):
     # feedback
     @commands.hybrid_command(aliases=FEEDBACK_ALIASES)
     async def feedback(self, ctx: commands.Context):
-        """Send feedback or suggestions for the bot"""
+        """Send feedback, suggestions, or bug reports for the bot."""
         await feedback_command(ctx)
 
 

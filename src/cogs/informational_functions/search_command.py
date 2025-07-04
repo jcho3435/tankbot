@@ -106,6 +106,10 @@ SEARCH_OUTPUT_DICT = {
         "desc": "Get the bot's invite link.",
         "syntax": f"{DEFAULT_PREFIX}invite"
     },
+    "feedback": {
+        "desc": "Send feedback, suggestions, or bug reports for the bot. 24 hour cooldown. Do not abuse this command or your account my be blacklisted from using this bot.",
+        "syntax": f"{DEFAULT_PREFIX}feedback",
+    },
 
     # Others
     "parameters": {
